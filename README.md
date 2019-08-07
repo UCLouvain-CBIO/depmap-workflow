@@ -1,2 +1,1 @@
-# depmap-workflow
-F1000research workflo
+F1000research `depmap` workflow paper.
