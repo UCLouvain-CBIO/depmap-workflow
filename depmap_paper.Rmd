@@ -244,31 +244,31 @@ p2 <- p2 + theme(axis.text.x = element_text(angle = 45, hjust=1)) +
 p2
 ```
 
-<!-- ```{r} -->
-<!-- # expression vs rnai gene dependency for Rhabdomyosarcoma Sarcoma -->
-<!-- # sarcoma <- metadata %>% -->
-<!-- #            select(depmap_id, cell_line, primary_disease, subtype_disease) %>% -->
-<!-- #            filter(primary_disease == "Sarcoma", subtype_disease == "Rhabdomyosarcoma") -->
-<!-- #  -->
-<!-- # rnai_sub <- rnai %>% select(depmap_id, gene, gene_name, dependency) -->
-<!-- # tpm_sub <- TPM %>% select(depmap_id, gene, gene_name, expression) -->
-<!-- #  -->
-<!-- # sarcoma_dep <- sarcoma %>% -->
-<!-- #                left_join(rnai_sub, by = "depmap_id") %>% -->
-<!-- #                select(-cell_line, -primary_disease, -subtype_disease, -gene_name) -->
-<!-- # sarcoma_exp <- sarcoma %>% left_join(tpm_sub, by = "depmap_id") -->
-<!-- # sarcoma_dat_exp <- full_join(sarcoma_dep, sarcoma_exp, -->
-<!-- #                              by = c("depmap_id", "gene")) -->
-<!-- #  -->
-<!-- # p3 <- ggplot(data=sarcoma_dat_exp, aes(x=dependency, y=expression, -->
-<!-- #                                        text = paste("gene:", gene_name))) + -->
-<!-- #       geom_point(alpha = 0.4, size = 0.5) + -->
-<!-- #       geom_vline(xintercept=mean(sarcoma_dat_exp$dependency, na.rm = TRUE), linetype = "dotted", color = "red") + -->
-<!-- #       geom_hline(yintercept=mean(sarcoma_dat_exp$expression, na.rm = TRUE), linetype = "dotted", color = "red") + -->
-<!-- #       ggtitle("Scatterplot of rnai dependency vs expression values for gene PIK3CA") -->
-<!-- # # ggplotly(p3) -->
-<!-- # p3 + theme(axis.text.x = element_text(angle = 45)) -->
-<!-- ``` -->
+```{r  message=FALSE, warning=FALSE}
+## expression vs rnai gene dependency for Rhabdomyosarcoma Sarcoma
+sarcoma <- metadata %>%
+           select(depmap_id, cell_line, primary_disease, subtype_disease) %>%
+           filter(primary_disease == "Sarcoma", subtype_disease == "Rhabdomyosarcoma")
+
+rnai_sub <- rnai %>% select(depmap_id, gene, gene_name, dependency)
+tpm_sub <- TPM %>% select(depmap_id, gene, gene_name, expression)
+
+sarcoma_dep <- sarcoma %>%
+               left_join(rnai_sub, by = "depmap_id") %>%
+               select(-cell_line, -primary_disease, -subtype_disease, -gene_name)
+sarcoma_exp <- sarcoma %>% left_join(tpm_sub, by = "depmap_id")
+sarcoma_dat_exp <- full_join(sarcoma_dep, sarcoma_exp,
+                             by = c("depmap_id", "gene"))
+
+p3 <- ggplot(data=sarcoma_dat_exp, aes(x=dependency, y=expression,
+                                       text = paste("gene:", gene_name))) +
+      geom_point(alpha = 0.4, size = 0.5) +
+      geom_vline(xintercept=mean(sarcoma_dat_exp$dependency, na.rm = TRUE), linetype = "dotted", color = "red") +
+      geom_hline(yintercept=mean(sarcoma_dat_exp$expression, na.rm = TRUE), linetype = "dotted", color = "red") +
+      ggtitle("Scatterplot of rnai dependency vs expression values for gene")
+# ggplotly(p3)
+p3 + theme(axis.text.x = element_text(angle = 45))
+```
 
 Boxplot displaying log genomic copy number for gene `RPL14` by lineage
 
@@ -380,16 +380,20 @@ driving genes.
 ```{r message=FALSE, warning=FALSE}
 # library(R.utils)
 # url <- "https://data.broadinstitute.org/ccle/CCLE_RRBS_tss_CpG_clusters_20181022.txt.gz"
-# 
-# RRBS_tss_CpG_clusters <-
-# read.table("CCLE_RRBS_tss_CpG_clusters_20181022.txt", header = TRUE) %>%
-# dplyr::rename(gene_name = cluster_id) %>%
-# tidyr::gather(cell_line, methylation, -c(gene_name, CpG_sites_hg19, avg_coverage)) #%>%
-# RRBS_tss_CpG_clusters_select <- RRBS_tss_CpG_clusters %>% filter(str_detect(gene_name, "GABRA3*"))
+#
+RRBS_tss_CpG_clusters <-
+read.table("CCLE_RRBS_tss_CpG_clusters_20181022.txt", header = TRUE) %>%
+dplyr::rename(gene_name = cluster_id) %>%
+tidyr::gather(cell_line, methylation, -c(gene_name, CpG_sites_hg19, avg_coverage)) #%>%
+
+RRBS_tss_CpG_clusters_select <- RRBS_tss_CpG_clusters %>% filter(str_detect(gene_name, "AGO1*"))
+
+View(RRBS_tss_CpG_clusters_select)
+
 # full_join(TPM, by = c("gene_name", "cell_line"))
 
 # View(CCLE_RRBS_tss_CpG_clusters[1:50, 1:10])
-# View(RRBS_tss_CpG_clusters_select)
+
 # head(TPM)
 # View(mutationCalls)
 ```
