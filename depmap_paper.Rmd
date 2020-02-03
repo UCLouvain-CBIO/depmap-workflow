@@ -15,7 +15,7 @@ vignette: >
   %\usepackage[utf8]{inputenc}
 ---
 
-```{r style, echo = FALSE, results = 'asis'}
+```{r style, echo = FALSE, message=FALSE, warning=FALSE, results = 'asis', include=FALSE}
 BiocStyle::markdown()
 # http://bioconductor.org/packages/release/bioc/vignettes/BiocWorkflowTools/inst/doc/Generate_F1000_Latex.html
 ```
@@ -44,85 +44,69 @@ mining, reproducible research, Bioconductor
 The consequences of genomic alterations of cancer cells on the molecular
 biological landscape of the cell may result in differential vulnerabilities, or
 "dependencies" compared to those of healthy cells. An example may be a gene not
-necessary for the survival in healthy cells, but essential for the vitality in a
+necessary for the survival in healthy cells, but essential for the vitality of
 particular cancer cell line. The exact nature of many of these dependencies in
 cancer cell lines is not completely understood. A map illustrating the
 relationships between the genetic features of cancer and cancer dependencies is
 desirable. The Cancer Dependency Map or "Depmap", a collaborative initiative
 between the Broad Institute and the Wellcome Sanger Institute, aims to map such
-dependencies in a broad range cancer cell lines, with the intention of
-exploiting this knowledge to develop new therapies in precision cancer medicine.
+dependencies in a broad range cancer cell lines, intended to mirror the
+distribution of various cancer diseases in the general population, with the
+intention of exploiting this knowledge to develop new therapies in precision
+cancer medicine.
 
-As of the 2019 Q4 Depmap release, 1756 human cancer cell lines have been mapped
-for dependencies. The sampling of tested cell lines is intended to mirror the
-distribution of human cancer. Information derived from the testing of new cell
-lines in the process of being mapped is added to subsequent quarterly dataset
-releases. The primary methods utilized in mapping genomic dependencies are gene
-knockout and gene knockdown, performed been CRISPR and RNAi, respectively.
-Genetic dependency is calculated from the measured log fold change in the of
-amount of shRNA detected after a fixed period after gene knockout or knockdown.
-To correct for potential off-target effects of gene knockout or knockdown in
-overestimating dependency with RNAi and CRISPR, the Depmap study utilized two
-algorithms, DEMETER2 and CERES, to moderate the dependency estimation.
-Measurements of chemical dependencies were also undertaken with the Depmap PRISM
-viability screens that, as of the 2019 Q4 release, consisted of 4,518 compounds
-tested against 578 cancer cell lines. The Depmap project has also compiled
-additional datasets of detailing molecular biological characterization of cancer
-cell lines, such as genomic copy number, Reverse Phase Protein Array (RPPA
-data, TPM gene expression data for protein coding genes and genomic mutation
-data. These datasets are updated quarterly on a release schedule and are
-publically available under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) licence.
+The Depmap initative is, as of the date of this publication, an ongoing project,
+with new data releases every 90 days. As of the most current 2019 Q4 Depmap
+release, 1756 human cancer cell lines have been mapped for dependencies. The
+primary methods utilized in the Depmap project to map genomic dependencies are
+gene knockout and gene knockdown, performed been CRISPR and RNAi, respectively.
+Genetic dependency is calculated from the observed log fold change in the amount
+of shRNA detected after gene knockout or knockdown. To correct for potential
+off-target effects of gene knockout or knockdown in overestimating dependency
+with RNAi and CRISPR, the Depmap study utilized two algorithms, DEMETER2 and
+CERES, to moderate the dependency estimation. Measurements of chemical
+dependencies were measured via Depmap PRISM viability screens that as of the
+2019 Q4 release, consisted of 4,518 compounds tested against 578 cancer cell
+lines. The Depmap project has also compiled additional datasets of detailing
+molecular biological characterization of cancer cell lines, such as genomic copy
+number, Reverse Phase Protein Array (RPPA) data, TPM gene expression data for
+protein coding genes and genomic mutation data. These datasets are updated
+quarterly on a release schedule and are publically available under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) licence.
 
-There is clearly a great wealth of information relevant to cancer research to be
-found within the Depmap data. Users who wish to begin investigation of this data
-may start by using the [data explorer](https://depmap.org/portal/interactive/)
-currently available on the Depmap website. However, this data viewer does not
-allow the visualization of more than 2 genes at a time, nor affords viewing data
-from older datasets. Therefore, in order to dig deeper into this data and
-perform more complex analyses, such as clustering of genes or cell lines on
-dependency, or global comparisons of multiple features, a more sophisticated,
-customizable data analysis tool is required. Moreover, even though the Depmap
-datasets have been made available for public access, it may be difficult for
-those not skilled in data manipulation to efficiently import and visualize this
-data, especially in regards to data cleaning and integrating data together from
-multiple datasets.
-
-<!-- For example, the Depmap project created a unique key -->
-<!-- corresponding to each cancer cell line, but this value is only included in the -->
-<!-- metadata dataset for each release. Another difficulty in fully exploiting this -->
-<!-- data is that some datasets are not of the same format, with some datasets having -->
-<!-- cancer cell lines as columns and others listing them as rows and vice versa. -->
-
-To address these issues, the `depmap` Bioconducter package was created. The
-Depmap datasets were converted to possess the private key "depmap_id" for all
-data tables, in order to make features more comparable. In addition, the Depmap
-datasets were converted to long format, to facilitate the use of common R
-packages such as `dplyr` and `ggplot2` in the R statistical environment. By
-creating visualizations in the R environment, aides in reproducible research,
-whereas the Depmap data viewer functions as a black box. 
+The `depmap` Bioconductor package was created in order to maximally exploit
+these rich datasets and aides in reproducible research, by importing the data
+into the R environment. Depmap datasets were cleaned, by converting all datasets
+to the same format, adding the unique key "depmap_id" for all data tables, in
+order to make features more comparable. In addition, the Depmap datasets were
+converted to long format, to facilitate the use of common R packages such as
+`dplyr` and `ggplot2`.
 
 As new Depmap datasets are released on a quarterly basis, it is not feasible to
-include all dataset files directly within the directory of the `depmap` R
-package. To keep the package lightweight, the `depmap` package `ExperimentHub`
-was used to store and retrieve all versions (starting from 19Q1) of the Depmap
-data in the Cloud using AWS. The `depmap` package contains accessor funtions to
-directly download from the Cloud the most current datasets into the R
-environment. Specific datasets, such as older datasets, which have been used in
-prior research can also be downloaded. This feature has the added advantage of
-enhancing reproducible research, such that specific versions of Depmap data can
-be selected, in addition to having access to the most current datasets. The
+include all dataset files in binary directly within the directory of the
+`depmap` R package. To keep the package lightweight, the `depmap` package
+utilizes and fully depends on the `ExperimentHub` package to store and retrieve
+all versions (starting from 19Q1) of the Depmap data in the Cloud using AWS. The
+`depmap` package contains accessor functions to directly download and cache the
+most current datasets from the Cloud into the R environment. Specific datasets,
+such as older datasets, which have been used in prior research can also be
+downloaded, if desired. This feature has the added advantage of enhancing
+reproducible research, such that specific versions of Depmap data can be
+selected, in addition to having access to the most current datasets. The
 `depmap` R package is available as part of Bioconductor at:
 https://bioconductor.org/packages/devel/data/experiment/html/depmap.html
 
 # Use cases
 
 The features of primary interest from the Depmap Project are the measurements of
-cancer gene dependency scores, found in datasets `rnai` and `crispr`. This score
-is an expression of how vital a particular gene for a given cancer cell line is
-in terms of the lethality resulting from the knockout/knockdown of that gene.
-For example, a highly negative dependency score is derived from a large negative
-log fold change in the population of cancer cells after gene knockout/knockdow
-and implies that cell line is highly dependent on that gene.
+cancer gene dependency scores, found in datasets `rnai` and `crispr`. The
+dependency score is an expression of how vital a particular gene for a given
+cancer cell line is in terms of the lethality resulting from the knockout or
+knockdown of that gene. For example, a highly negative dependency score is
+derived from a large negative log fold change in the population of cancer cells
+after gene knockout or knockdow and implies that cell line is highly dependent
+on that gene. Genes that possess such highly negative dependency scores may be
+interesting targets for research in cancer medicine.
 
 ```{r load_libraries, message=FALSE, warning=FALSE, echo=TRUE}
 ## load libraries
@@ -139,35 +123,42 @@ library("tidyr")
 ```
 
 The `depmap` datasets are too large to be included into the binary of the R
-package, therefore this data has been uploaded to the cloud. The data can be 
-accessed with the `ExperimentHub()` accessor function to create an
-`ExperimentHub` object. This object can be queried for specific terms, such as
-`"depmap"`. Other queries are also possible, such as `"19Q3"` to search for a 
-specific datasets from a particular release. 
+package, therefore this data is stored in the Cloud. There are two ways to
+access the `depmap` datasets in this way. The latest `depmap` datasets can be
+accessed with dedicated accessor functions that download and cache the latest
+available dataset.
 
-Available `depmap` datasets can be viewed by querying an `ExperimentHub()`
-object.
+```{r EH, message=FALSE, warning=FALSE, echo=TRUE, eval=FALSE}
+rnai <- depmap_rnai()
+crispr <- depmap_crispr()
+copyNumber <- depmap_copyNumber()
+TPM <- depmap_RPPA()
+RPPA <- depmap_TPM()
+metadata <- depmap_metadata()
+mutationCalls <- depmap_mutationCalls()
+drug_sensitivity <- depmap_drug_sensitivity()
+```
+
+Alternatively, a specific dataset (from any available release) can be accessed
+with the `ExperimentHub()` accessor function, which creates an `ExperimentHub`
+object, which can be queried for specific terms, such as the unique `EH`
+number that corresponds to that dataset (e.g. `"EH3080"`). 
 
 ```{r EH, message=FALSE, warning=FALSE, echo=TRUE}
 ## create ExperimentHub query object
 eh <- ExperimentHub()
 query(eh, "depmap")
-
-# rnai <- eh[["EH3080"]]
-# crispr <- eh[["EH3081"]]
-# copyNumber <- eh[["EH3082"]]
-# TPM <- eh[["EH3084"]]
-# RPPA <- eh[["EH3083"]]
-# mutationCalls <- eh[["EH3085"]]
-# metadata <- eh[["EH3086"]]
-# drug_sensitivity <- eh[["EH3087"]]
 ```
 
-Each dataset has a specific `EH id` unique to it that be used to download that
-dataset. Below, specific datasets from the `19_Q3` release are loaded into the R
-environment in this manner.
+Below, specific datasets from the `19_Q3` release are downloaded via their
+unique `EH` numbers and cached into the R environment.
 
 ```{r load_data, message=FALSE, warning=FALSE, echo=TRUE}
+## create ExperimentHub query object
+eh <- ExperimentHub()
+query(eh, "depmap")
+
+## download and cache select datasets
 rnai <- eh[["EH3080"]]
 mutationCalls <- eh[["EH3085"]]
 metadata <- eh[["EH3086"]]
@@ -177,14 +168,14 @@ copyNumber <- eh[["EH3082"]]
 drug_sensitivity <- eh[["EH3087"]]
 ```
 
-A particular functional lack of the Depmap tool is that it does not support the
-mining of dependency scores globally (among all cell lines) or for a specific 
-type of cancer. If one interested researching soft tissue sarcomas and wanted to
-search all such cancer cell lines for the gene with the greatest dependency, it 
-is possible to accomplish this task by importing the data into R, and using data
-manipulation and visualization tools `dplyr` and `ggplot2`. Below, the `rnai`
-dataset is searched for cell lines with *"SOFT_TISSUE"* in the CCLE name, and
-displaying a list of the highest dependency scores.
+By importing the `depmap` data into the R environment, the data can be mined
+more effectively, such as mining of dependency scores globally (among all cell
+lines) or for a specific type of cancer. If one interested researching soft
+tissue sarcomas and wanted to search all such cancer cell lines for the gene
+with the greatest dependency, it is possible to accomplish this task by using
+data manipulation and visualization tools `dplyr` and `ggplot2`. Below, the
+`rnai` dataset is searched for cell lines with *"SOFT_TISSUE"* in the CCLE name,
+and displaying a list of the highest dependency scores.
 
 ```{r, soft_tissue_cell_lines, echo=TRUE}
 ## list of dependency scores
@@ -217,34 +208,29 @@ plot above reflects the same overall distribution in two dimensions.
 
 ```{r message=FALSE, warning=FALSE}
 meta_rnai <- metadata %>%
-  select(depmap_id, lineage) %>%
-  full_join(rnai, by = "depmap_id") %>%
-  filter(gene_name == "RPL14") %>% 
-  full_join((mutationCalls %>% select(depmap_id, entrez_id, is_cosmic_hotspot, var_annotation)),
-                      by = c("depmap_id", "entrez_id")) # %>% 
-  #full_join((TPM %>% select(depmap_id, gene, expression)),
-  #                    by = c("depmap_id", "gene"))   
+             select(depmap_id, lineage) %>%
+             full_join(rnai, by = "depmap_id") %>%
+             filter(gene_name == "RPL14") %>% 
+             full_join((mutationCalls %>%
+             select(depmap_id, entrez_id,
+                    is_cosmic_hotspot, var_annotation)),
+                    by = c("depmap_id", "entrez_id"))
 
-p1 <- meta_rnai %>% ggplot(aes(x=dependency, y=lineage, #text = paste("expression:", expression)
-                               )) +
-  geom_point(alpha = 0.4, size = 0.5) +
-  geom_point(data = subset(meta_rnai, var_annotation == "damaging"), color = "red") +
-  geom_point(data = subset(meta_rnai, var_annotation == "other non-conserving"), color = "blue") +
-  geom_point(data = subset(meta_rnai, var_annotation == "other conserving"), color = "cyan") +
-  geom_point(data = subset(meta_rnai, is_cosmic_hotspot == TRUE), color = "orange") +
-  geom_vline(xintercept=mean(meta_rnai$dependency, na.rm = TRUE), linetype = "dotted", color = "red") +
-  ggtitle("Scatterplot of dependency scores for gene RPL14 by lineage")
-
-# ggplotly(p1)
+p1 <- meta_rnai %>%
+      ggplot(aes(x=dependency, y=lineage)) +
+      geom_point(alpha = 0.4, size = 0.5) +
+      geom_point(data = subset(meta_rnai, var_annotation == "damaging"), color = "red") +
+      geom_point(data = subset(meta_rnai, var_annotation == "other non-conserving"), color = "blue") +
+      geom_point(data = subset(meta_rnai, var_annotation == "other conserving"), color = "cyan") +
+      geom_point(data = subset(meta_rnai, is_cosmic_hotspot == TRUE), color = "orange") +
+      geom_vline(xintercept=mean(meta_rnai$dependency, na.rm = TRUE), linetype = "dotted", color = "red") +
+      ggtitle("Scatterplot of dependency scores for gene RPL14 by lineage")
 p1
-
-rm(p1)
-rm(meta_rnai)
 ```
 
 Boxplot displaying expression values for gene `RPL14` by lineage
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 p2 <- metadata %>%
       select(depmap_id, lineage) %>%
       full_join(TPM, by = "depmap_id") %>%
@@ -252,15 +238,10 @@ p2 <- metadata %>%
       ggplot(aes(x=lineage, y=expression, fill = lineage)) +
       geom_boxplot(outlier.alpha = 0.1) +
       ggtitle("Boxplot of expression values for gene RPL14 by lineage")
+
 p2 <- p2 + theme(axis.text.x = element_text(angle = 45, hjust=1)) +
       theme(legend.position = "none")
-# ggplotly(p2)
 p2
-```
-
-```{r}
-# rm(p2)
-# rm(meta_tpm)
 ```
 
 <!-- ```{r} -->
@@ -289,433 +270,135 @@ p2
 <!-- # p3 + theme(axis.text.x = element_text(angle = 45)) -->
 <!-- ``` -->
 
-<!-- ```{r} -->
-<!-- # rm(p3) -->
-<!-- # rm(sarcoma) -->
-<!-- # rm(rnai_sub) -->
-<!-- # rm(tpm_sub) -->
-<!-- # rm(sarcoma_dep) -->
-<!-- # rm(sarcoma_exp) -->
-<!-- # rm(sarcoma_dat_exp) -->
-<!-- # rm(TPM) -->
-<!-- ``` -->
+Boxplot displaying log genomic copy number for gene `RPL14` by lineage
 
-Boxplot displaying log genomic copy number for gene `PIK3CA` by lineage
-
-```{r}
+```{r message=FALSE, warning=FALSE}
 # plotly plot of copy number by lineage
 p4 <- metadata %>%
       select(depmap_id, lineage) %>%
       full_join(copyNumber, by = "depmap_id") %>%
-      filter(gene_name == "PIK3CA") %>%
+      filter(gene_name == "RPL14") %>%
       ggplot(aes(x=lineage, y=log_copy_number, fill = lineage)) +
       geom_boxplot(outlier.alpha = 0.1) +
-      ggtitle("Boxplot of log copy number for gene PIK3CA by lineage")
+      ggtitle("Boxplot of log copy number for gene RPL14 by lineage")
 p4 <- p4 + theme(axis.text.x = element_text(angle = 45, hjust=1)) +
       theme(legend.position = "none")
-# ggplotly(p4)
 p4
 ```
 
-```{r}
-#rm(meta_copy)
-# rm(copyNumber)
-# rm(p4)
-```
+<!-- ```{r message=FALSE, warning=FALSE} -->
+<!-- # drug dependency by lineage -->
+<!-- panc <- metadata %>% -->
+<!--             select(depmap_id, cell_line, primary_disease, subtype_disease) %>% -->
+<!--             filter(primary_disease == "Liver Cancer") -->
 
-```{r}
-# drug dependency by lineage
-# prostate <- metadata %>%
-#            select(depmap_id, cell_line, primary_disease, subtype_disease) %>%
-#            filter(primary_disease == "Thyroid Cancer")
-# 
-# p5 <- drug_sensitivity %>%
-#       select(depmap_id, compound, dependency) %>%
-#       right_join(prostate, by = "depmap_id") %>%
-#       arrange(dependency) %>%
-#       ggplot(aes(x=cell_line, y=dependency, fill = cell_line)) +
-#       geom_boxplot(outlier.alpha = 0.1) +
-#       ggtitle("Boxplot of chemical dependency of thyroid cell lines")
-# p5 <- p5 + theme(axis.text.x = element_text(angle = 45))
-# ggplotly(p5)
-```
-
-<!-- ## Find dependency score for "BRCA1" on "184A1_Breast" -->
-
-<!-- We will demonstrate how to obtain individual dependency scores corresponding to -->
-<!-- a specific gene and cell lineage. For example, shown below is the dependency of -->
-<!-- a breast cancer lineage, such as `184A1_BREAST` has on a human tumor suppressor -->
-<!-- gene, like `BRCA1` when it is knocked down via rnai. Shown below is the -->
-<!-- comparison for data found within the `rnai` dataset. This shows a score which is -->
-<!-- slightly positive, indicating that the knockdown of this gene is slightly -->
-<!-- beneficial to the vitality of this cancer cell lineage. However, it may be -->
-<!-- insightful to put this single dependency score in context. -->
-
-<!-- ```{r dep_score_BRCA1_184A1Breast, echo=TRUE} -->
-<!-- dep_score_BRCA1_184A1Breast <- rnai %>% -->
-<!--                                select(cell_line, gene_name, dependency) %>% -->
-<!--                                filter(cell_line == "184A1_BREAST", -->
-<!--                                       gene_name == "BRCA1") -->
-
-<!-- dep_score_BRCA1_184A1Breast -->
-<!-- ``` -->
-
-<!-- ## Average gene dependency for "BRCA1" -->
-
-<!-- Shown below is the average dependency score for `BRCA1` for all cancer cell -->
-<!-- lines in the `rnai` dataset. -->
-
-<!-- ```{r, BRCA1_Avg_Dep_Score, echo=TRUE} -->
-<!-- brca1_dep_score_avg_rnai <- rnai %>% -->
-<!--                             select(gene_name, dependency) %>% -->
-<!--                             filter(gene_name == "BRCA1") %>% -->
-<!--                             summarise(mean_dependency_brca1 = -->
-<!--                                       mean(dependency, na.rm=TRUE)) -->
-
-<!-- brca1_dep_score_avg_rnai -->
-<!-- ``` -->
-
-<!-- ## Average gene dependency for all genes in the `rnai` dataset -->
-
-
-<!-- Or to see the average gene dependency across all genes in the entire `rnai` -->
-<!-- dataset. As one can see below, the average dependency for an average gene in the -->
-<!-- `rnai` dataset is slightly negative but close to zero. -->
-
-<!-- ```{r, all_gene_ds_avg_rnai, echo=TRUE} -->
-<!-- all_gene_dep_score_avg_rnai <- rnai %>% -->
-<!--                                select(gene_name, dependency) %>% -->
-<!--                                summarise(mean_dependency_all_genes_rnai = -->
-<!--                                          mean(dependency, na.rm=TRUE)) -->
-<!-- all_gene_dep_score_avg_rnai -->
-<!-- ``` -->
-
-<!-- ## Cell lines in the `rnai` dataset with "soft tissue" in the name -->
-
-<!-- If we are interested researching soft tissue sarcomas and wanted to find the -->
-<!-- cell lines withing the `rnai` dataset that had "soft tissue" in the CCLE name of -->
-<!-- cancer cell line, and sort by the highest dependency score. The results of such -->
-<!-- a search is shown below. Note: CCLE names are in ALL CAPS with an underscore. -->
-
-<!-- ```{r, soft_tissue_cell_lines, echo=TRUE} -->
-<!-- soft_tissue_dep_rnai <- rnai %>% -->
-<!--                         select(cell_line, gene_name, dependency) %>% -->
-<!--                         filter(stringr::str_detect(cell_line, "SOFT_TISSUE")) %>% -->
-<!--                         arrange(dependency) -->
-
-<!-- soft_tissue_dep_rnai -->
-<!-- ``` -->
-
-<!-- ## Cell lines with dependency for a  entrez_id of interest -->
-
-<!-- Sometimes it is difficult to find the subset with the exact gene name one wishes -->
-<!-- to find. In this case, it is better to search by `entrez_id`. For example, a -->
-<!-- [recent paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6251792/) describes -->
-<!-- gene knockdown of *NRF2* increases chemosensitivity in certain types of cancer. -->
-<!-- It might be interesting to see what interactions knockdown of this gene has on -->
-<!-- other cancer cell lines. However, searching by *filter(gene_name == "NRF2")* -->
-<!-- will not yield any results. We know from NCBI that the Entrez ID for this gene -->
-<!-- is "4780" and it is possible to search this dataset by that criteria. Here it -->
-<!-- can be shown that the gene name for *NRF2* in the `rnai` dataset is *NFE2L2*. -->
-
-<!-- ```{r cell_lines_with_entrez_id_NRF2, echo=TRUE} -->
-<!-- entrez_id_NRF2 <- rnai %>% -->
-<!--                   select(entrez_id, cell_line, gene_name, dependency) %>% -->
-<!--                   filter(entrez_id == "4780") %>%  -->
-<!--                   arrange(dependency) -->
-
-<!-- entrez_id_NRF2 -->
-<!-- ``` -->
-
-<!-- ## Cell lines with dependency for "NFE2L2" -->
-
-<!-- Below the highest dependency scores via rnai knock down of a specific gene, -->
-<!-- *NFE2L2* will be obtained and the cancer cell lines associated with those values -->
-<!-- will be listed. It appears that the knockdown of this gene is strongly -->
-<!-- associated with cell death with in lung and kidney cancer cell lines. -->
-
-<!-- ```{r greatest_Dep_Score_NFE2L2, echo=TRUE} -->
-<!-- top_dep_score_NFE2L2_rnai <- rnai %>% -->
-<!--                              select(cell_line, gene_name, dependency) %>% -->
-<!--                              filter(gene_name == "NFE2L2") %>% -->
-<!--                              arrange(dependency) -->
-
-<!-- top_dep_score_NFE2L2_rnai -->
-<!-- ``` -->
-
-<!-- ## Genes for cell line "NCIH2066_LUNG" -->
-
-<!-- If we would like to obtain the top 10 lowest dependency scores for a -->
-<!-- particular cell line (for example `NCIH2066_LUNG`) along with the genes -->
-<!-- associated with those values: -->
-
-<!-- ```{r top_dep_score_NCIH2066_LUNG_rnai, echo=TRUE} -->
-<!-- top_dep_score_NCIH2066_LUNG_rnai <- rnai %>% -->
-<!--                                 select(cell_line, gene_name, dependency) %>% -->
-<!--                                 filter(cell_line == "NCIH2066_LUNG") %>% -->
-<!--                                 arrange(dependency) -->
-
-<!-- top_dep_score_NCIH2066_LUNG_rnai -->
-<!-- ``` -->
-
-<!-- ## Most and least RNAi dependency genes -->
-
-<!-- Below shows the most significant genes that deplete cancer cell lines upon -->
-<!-- knockdown and their dependency scores for the entire `rnai` data. -->
-
-<!-- ```{r greatest_dep_score_gene_rnai, echo=TRUE} -->
-<!-- greatest_dep_score_gene_rnai <- rnai %>% -->
-<!--                             select(cell_line, gene_name, dependency) %>% -->
-<!--                             arrange(dependency) -->
-
-<!-- greatest_dep_score_gene_rnai -->
-<!-- ``` -->
-
-<!-- Below shows the least significant genes that induce cancer cell line vitality -->
-<!-- upon knockdown and their dependency scores for the entire `rnai` data. -->
-<!-- Unsurprisingly, we see high incidence of "TP53", a well known cancer driver. -->
-
-<!-- ```{r cell_line_gene_rnai_lowest_dep_score, echo=TRUE} -->
-<!-- rnai %>% select(cell_line, gene_name, dependency) %>% -->
-<!--          arrange(desc(dependency)) %>%  -->
-<!--          head() -->
-<!-- ``` -->
-
-<!-- ## Most and least CRISPR-Cas9 dependency genes -->
-
-<!-- Below we will apply some of the same selections as shown in the above examples -->
-<!-- on the `crispr` gene knockout dataset and observe the difference between that -->
-<!-- dataset and `rnai`. First we will look at the most significant dependency scores -->
-<!-- in the `crispr` dataset. As can be seen below, there is a different population -->
-<!-- of significant genes with the highest dependency score. -->
-
-<!-- ```{r cell_line_gene_crispr_greatest_dep_score, echo=TRUE} -->
-<!-- greatest_dep_score_gene_crispr <- crispr %>% -->
-<!--                                 select(cell_line, gene_name, dependency) %>% -->
-<!--                                 arrange(dependency) -->
-
-<!-- greatest_dep_score_gene_crispr -->
-<!-- ``` -->
-
-<!-- First we will look at the least significant (most cancer inducing) dependency -->
-<!-- scores in the `crispr` dataset. -->
-
-<!-- ```{r cell_line_gene_crispr_lowest_dep_score, echo=TRUE} -->
-<!-- lowest_dep_score_gene_crispr <- crispr %>% -->
-<!--                             select(cell_line, gene_name, dependency) %>% -->
-<!--                             arrange(desc(dependency)) -->
-
-<!-- lowest_dep_score_gene_crispr -->
+<!-- p5 <- drug_sensitivity %>% -->
+<!--       select(depmap_id, compound, dependency) %>% -->
+<!--       inner_join(panc, by = "depmap_id") %>% -->
+<!--       arrange(dependency) %>% -->
+<!--       ggplot(aes(x=cell_line, y=dependency, fill = cell_line)) + -->
+<!--       geom_boxplot(outlier.alpha = 0.1) + -->
+<!--       ggtitle("Boxplot of chemical dependency of pancreatic cell lines") -->
+<!-- p5 <- p5 + theme(axis.text.x = element_text(angle = 45, hjust=1)) + -->
+<!--       theme(legend.position = "none") -->
+<!-- p5 -->
+<!-- # ggplotly(p5) -->
 <!-- ``` -->
 
 ## Differences in RNAi and CRISPR-Cas9 dependency scores
 
-Here we will plot the difference in expression between the most signficant genes
-found in the `crispr` and `rnai` datasets.
+It should be noted that RNAi and CRISPR-Cas9 arrive at different estimations of
+dependency scores, even for the same gene and cell line. This is partly due to
+the different biological mechanism of gene knockout versus knockdown. It has
+been shown that CRISPR-Cas9 overestimates gene dependency due to seed effects,
+whereas RNAi is more resilient to this effect. 
+
+Displayed below are the differences in expression between the genes with highest
+and lowest dependency score found in the `crispr` and `rnai` datasets.
 
 ```{r comparison_rnai_crispr_dep_scores, fig.height=6, fig.width=7, fig.align="center", echo=FALSE, message=FALSE}
-# sort `crispr` dep scores by most cancer inducing
-top_20_dep_scores_crispr <- crispr %>%
-                                select(gene_name, dependency) %>%
-                                arrange(desc(dependency)) %>%
-                                top_n(20)
-
-# sort `crispr` dep scores by least cancer inducing
-lowest_20_dep_scores_crispr <- crispr %>%
-                                select(gene_name, dependency) %>%
-                                arrange(dependency) %>%
-                                top_n(-20)
-
-# sort `rnai` dep scores by most cancer inducing
-top_20_dep_scores_rnai <- rnai %>%
-                            select(gene_name, dependency) %>%
-                            arrange(desc(dependency)) %>%
-                            top_n(20)
-
-# shorten gene name so it fits on plot
-top_20_dep_scores_rnai[12, 1] <- "GAS6-AS2"
-
-# sort `rnai` dep scores by least cancer inducing
-lowest_20_dep_scores_rnai <- rnai %>%
-                                select(gene_name, dependency) %>%
-                                arrange(dependency) %>%
-                                top_n(-20)
-
-# # rnai highest dep scores
-p1 <- ggplot(lowest_20_dep_scores_rnai) +
-        aes(gene_name, dependency, color = dependency) +
-        geom_point() + scale_colour_viridis() +
-        theme(axis.text.x = element_text(angle=90, hjust=1)) +
-        ggtitle("High DS genes rnai")
+## rnai highest dep scores
+p1 <- rnai %>%
+      select(gene_name, dependency) %>%
+      arrange(dependency) %>%
+      top_n(-20) %>% 
+      ggplot(aes(gene_name, dependency, color = dependency)) +
+      geom_point() +
+      scale_colour_viridis() +
+      theme(axis.text.x = element_text(angle=90, hjust=1)) +
+      ggtitle("High DS genes rnai")
 
 # crispr highest dep scores
-p2 <- ggplot(lowest_20_dep_scores_crispr) +
-        aes(gene_name, dependency, color = dependency) +
-        geom_point() + scale_colour_viridis() +
-        theme(axis.text.x = element_text(angle=90, hjust=1)) +
-        ggtitle("High DS genes crispr ")
+p2 <- crispr %>%
+      select(gene_name, dependency) %>%
+      arrange(dependency) %>%
+      top_n(-20) %>% 
+      ggplot(aes(gene_name, dependency, color = dependency)) +
+      geom_point() +
+      scale_colour_viridis() +
+      theme(axis.text.x = element_text(angle=90, hjust=1)) +
+      ggtitle("High DS genes crispr ")
 
 # rnai lowest dep scores
-p3 <- ggplot(top_20_dep_scores_rnai) +
-        aes(gene_name, dependency, color = dependency) +
-        geom_point() + scale_colour_viridis() +
-        theme(axis.text.x = element_text(angle=90, hjust=1)) +
-        ggtitle("Low DS genes rnai")
+p3 <- rnai %>%
+      select(gene_name, dependency) %>%
+      arrange(desc(dependency)) %>%
+      top_n(20)
+p3[12, 1] <- "GAS6-AS2"
+
+p3 <- p3 %>% ggplot(aes(gene_name, dependency, color = dependency)) +
+      geom_point() +
+      scale_colour_viridis() +
+      theme(axis.text.x = element_text(angle=90, hjust=1)) +
+      ggtitle("Low DS genes rnai")
 
 # crispr lowest dep scores
-p4 <- ggplot(top_20_dep_scores_crispr) +
-        aes(gene_name, dependency, color = dependency) +
-        geom_point() + scale_colour_viridis() +
-        theme(axis.text.x = element_text(angle=90, hjust=1)) +
-        ggtitle("Low DS genes crispr")
+p4 <- crispr %>%
+      select(gene_name, dependency) %>%
+      arrange(desc(dependency)) %>%
+      top_n(20) %>%
+      ggplot(aes(gene_name, dependency, color = dependency)) +
+      geom_point() +
+      scale_colour_viridis() +
+      theme(axis.text.x = element_text(angle=90, hjust=1)) +
+      ggtitle("Low DS genes crispr")
 
 # #plot as 1x2 grid
 grid.arrange(p1, p2, p3, p4, nrow=2,
              top = "Most Extreme Dep Scores for CRISPR and RNAI")
 ```
 
-Combine depmap data with other cancer omic data.
+## Combining depmap data with other cancer omic data.
 
-```{r}
-library("readr")
-url <- "https://data.broadinstitute.org/ccle/CCLE_RRBS_tss_CpG_clusters_20181022.txt.gz"
-CCLE_RRBS_tss_CpG_clusters <- read_csv(gzfile(url)) ## unzip file
+One of the strengths of importing the `depmap` data into the R is the facility
+of combining this data with other datasets of interest.
+
+Below the `depmap` data is combined with `CCLE_RRBS_tss_CpG_clusters` data to
+visualize the methylation of promoters and TPM expression of suspected cancer
+driving genes.
+ 
+```{r message=FALSE, warning=FALSE}
+# library(R.utils)
+# url <- "https://data.broadinstitute.org/ccle/CCLE_RRBS_tss_CpG_clusters_20181022.txt.gz"
+# 
+# RRBS_tss_CpG_clusters <-
+# read.table("CCLE_RRBS_tss_CpG_clusters_20181022.txt", header = TRUE) %>%
+# dplyr::rename(gene_name = cluster_id) %>%
+# tidyr::gather(cell_line, methylation, -c(gene_name, CpG_sites_hg19, avg_coverage)) #%>%
+# RRBS_tss_CpG_clusters_select <- RRBS_tss_CpG_clusters %>% filter(str_detect(gene_name, "GABRA3*"))
+# full_join(TPM, by = c("gene_name", "cell_line"))
+
+# View(CCLE_RRBS_tss_CpG_clusters[1:50, 1:10])
+# View(RRBS_tss_CpG_clusters_select)
+# head(TPM)
+# View(mutationCalls)
+```
+
+```{r message=FALSE, warning=FALSE}
+## combine expression with mutation data
 
 
 ```
-
-<!-- Compare the count of top 50 unique genes for `crispr` and `rnai` datasets for -->
-<!-- the most cancer-vitality inducing genes. -->
-
-<!-- ```{r count_comp_rnai_crispr_dep_scores, fig.height=6, fig.width=7, fig.align="center", echo=FALSE, message=FALSE} -->
-<!-- # get counts of top 50 genes in `crispr` that are most cancer-vitality inducing -->
-<!-- unique_lowest_dep_scores_gene_crispr <- crispr %>% -->
-<!--                                     select(gene_name, dependency) %>% -->
-<!--                                     arrange(desc(dependency)) %>% -->
-<!--                                     top_n(50) %>% -->
-<!--                                     count(gene_name) %>% -->
-<!--                                     arrange(desc(n)) -->
-
-<!-- # TBC1D3 appears to be an extremely common for `crispr` and dominates top 100 -->
-<!-- # most cancer-vitality-inducing genes. -->
-
-<!-- # get counts of top 50 genes in `rnai` that are most cancer-vitality inducing -->
-<!-- unique_lowest_dep_scores_gene_rnai <- rnai %>% -->
-<!--                                 select(gene_name, dependency) %>% -->
-<!--                                 arrange(desc(dependency)) %>% -->
-<!--                                 top_n(50) %>% -->
-<!--                                 count(gene_name) %>% -->
-<!--                                 arrange(desc(n)) -->
-
-<!-- # Whereas for `rnai` UBBP4 and ACTG1P4 are most common. -->
-
-<!-- # shorten gene name to fit on plot -->
-<!-- unique_lowest_dep_scores_gene_rnai[9, 1] <- "GAS6-AS2" -->
-
-<!-- # get counts of top 50 genes in `crispr` with greatest dependency -->
-<!-- unique_top_dep_scores_crispr <- crispr %>% -->
-<!--                                 select(gene_name, dependency) %>% -->
-<!--                                 arrange(dependency) %>% -->
-<!--                                 top_n(-50) %>% -->
-<!--                                 count(gene_name) %>% -->
-<!--                                 arrange(desc(n)) -->
-
-<!-- # Most common gene for top 100 most dependent genes in `crispr` is RAN -->
-
-<!-- # get counts of top 50 genes in `rnai` with greatest dependency -->
-<!-- unique_top_dep_scores_rnai <- rnai %>% -->
-<!--                                 select(gene_name, dependency) %>% -->
-<!--                                 arrange(dependency) %>% -->
-<!--                                 top_n(-50) %>% -->
-<!--                                 count(gene_name) %>% -->
-<!--                                 arrange(desc(n)) -->
-
-<!-- # Most common genes for top 100 most dependent genes in `rnai` are RPL7, EIF3B -->
-<!-- # and RPL14. -->
-
-<!-- # rnai highest dep scores -->
-<!-- p5 <- ggplot(unique_top_dep_scores_crispr, aes(x=gene_name, y=n)) + -->
-<!--     geom_bar(stat='identity', fill="steelblue2") + -->
-<!--     ylab("count") + theme(axis.text.x = element_text(angle=90, hjust=1)) + -->
-<!--     ggtitle("Highest DS genes crispr") -->
-
-<!-- p6 <- ggplot(unique_top_dep_scores_rnai, aes(x=gene_name, y=n)) + -->
-<!--     geom_bar(stat='identity', fill="steelblue2") + -->
-<!--     ylab("count") + theme(axis.text.x = element_text(angle=90, hjust=1)) + -->
-<!--     ggtitle("Highest DS genes rnai") -->
-
-<!-- p7 <- ggplot(unique_lowest_dep_scores_gene_crispr, aes(x=gene_name, y=n)) + -->
-<!--     geom_bar(stat='identity', fill="steelblue2") + -->
-<!--     ylab("count") + theme(axis.text.x = element_text(angle=90, hjust=1)) + -->
-<!--     ggtitle("Lowest DS genes crispr") -->
-
-<!-- p8 <- ggplot(unique_lowest_dep_scores_gene_rnai, aes(x=gene_name, y=n)) + -->
-<!--     geom_bar(stat='identity', fill="steelblue2") + -->
-<!--     ylab("count") + theme(axis.text.x = element_text(angle=90, hjust=1)) + -->
-<!--     ggtitle("Lowest DS genes rnai") -->
-
-<!-- ## plot as 1x2 grid -->
-<!-- grid.arrange(p5, p6, p7, p8, nrow=2, -->
-<!--              top = "Top 50 CRISPR and RNAI genes with High and Low Dep Score") -->
-<!-- ``` -->
-
-<!-- Mean log copy number (total dataset) and mean log copy number for each gene -->
-
-<!-- ```{r mean_log_copy_num_gene, fig.height=4, fig.width=6, fig.align="center", echo=FALSE, message=FALSE} -->
-<!-- # mean log copy number for all genes -->
-<!-- mean_log_copy_num_gene <- copyNumber %>% -->
-<!--                             select(gene_name, log_copy_number) %>% -->
-<!--                             summarise(mean_log_copy_number_all_genes = -->
-<!--                                           mean(log_copy_number, na.rm = TRUE)) -->
-
-<!-- # get average value -->
-<!-- val_mean_log_copy_num_gene <- as.numeric(mean_log_copy_num_gene[1,1]) -->
-
-<!-- # mean log copy number for each gene -->
-<!-- each_log_copy_num_gene <- copyNumber %>% -->
-<!--                           select(gene_name, log_copy_number) %>% -->
-<!--                           group_by(gene_name) %>% -->
-<!--                           summarise(mean_log_copy_number = -->
-<!--                                           mean(log_copy_number, na.rm = TRUE)) -->
-
-<!-- # add an ID column -->
-<!-- all_log_copy_num_gene <- -->
-<!--     as.data.frame(na.omit(each_log_copy_num_gene$mean_log_copy_number)) %>% -->
-<!--     tibble::rowid_to_column(., "ID") -->
-
-<!-- # add col names -->
-<!-- colnames(all_log_copy_num_gene, do.NULL = FALSE) -->
-<!-- colnames(all_log_copy_num_gene) <- c("gene", "log_copy_number") -->
-
-<!-- # plot of mean copy number for every gene -->
-<!-- p9 <- ggplot(all_log_copy_num_gene) + -->
-<!--             aes(x=gene, y=log_copy_number, color = log_copy_number) + -->
-<!--             geom_point() +  scale_colour_viridis() + -->
-<!--             geom_hline(yintercept = val_mean_log_copy_num_gene, -->
-<!--             linetype = "dashed", color = "red") + -->
-<!--             theme(axis.text.x = element_text(angle = 90, hjust = 1)) + -->
-<!--             ggtitle("Mean log copy number change for every gene") -->
-<!-- p9 -->
-<!-- ``` -->
-
-<!-- ## Genes with greatest mean log copy number -->
-
-<!-- Find genes with greatest mean log copy number -->
-
-<!-- ```{r greatest_log_copy_num_genes, fig.height=4, fig.width=6, fig.align="center", echo=FALSE, message=FALSE} -->
-<!-- # mean log copy number for each gene -->
-<!-- p10 <- copyNumber %>% -->
-<!--        select(gene_name, log_copy_number) %>% -->
-<!--        group_by(gene_name) %>% -->
-<!--        summarise(mean_long_copy_num = mean(log_copy_number))%>% -->
-<!--        arrange(desc(mean_long_copy_num)) %>% -->
-<!--        top_n(20) %>% ggplot(aes(x=gene_name, y=mean_long_copy_num)) + -->
-<!--        geom_bar(stat='identity', fill="steelblue2") + -->
-<!--        ylab("log Copy Number") + -->
-<!--        theme(axis.text.x = element_text(angle = 90, hjust = 1)) + -->
-<!--        ggtitle("Top 20 genes with largest log copy number") -->
-<!-- p10 -->
-<!-- ``` -->
 
 ```{r}
 ## TPM expression vs mutation
@@ -742,8 +425,8 @@ possible ways of installing it:
 1) Install the development version of R (v.3.6) — required for Bioconductor
 v.3.10 — and install depmap using the command:
 
-```{r}
-# BiocManager::install('depmap', version = 'devel')
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+BiocManager::install('depmap', version = 'devel')
 ```
 
 –or–
@@ -751,10 +434,10 @@ v.3.10 — and install depmap using the command:
 2) Install depmap 1.0 directly from the github repository using the devtools R
 package:
 
-```{r}
-# install.packages('devtools')
-# library(devtools)
-# install_github('uclouvain-cbio/depmap')
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+install.packages('devtools')
+library(devtools)
+install_github('uclouvain-cbio/depmap')
 ```
 
 # Session information
