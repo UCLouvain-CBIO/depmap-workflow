@@ -190,8 +190,8 @@ displayed as a histogram showing the distribution of dependency scores for gene
 ## Basic histogram
 rnai %>% select(gene, gene_name, dependency) %>% 
          filter(gene_name == "RPL14") %>% 
-         ggplot(aes(x=dependency)) + geom_histogram() +
-         geom_vline(xintercept=mean(rnai$dependency, na.rm = TRUE),
+         ggplot(aes(x = dependency)) + geom_histogram() +
+         geom_vline(xintercept = mean(rnai$dependency, na.rm = TRUE),
                     linetype = "dotted", color = "red") +
          ggtitle("Histogram of dependency scores for gene RPL14")
 ```
@@ -213,7 +213,7 @@ meta_rnai <- metadata %>%
                     by = c("depmap_id", "entrez_id"))
 
 p1 <- meta_rnai %>%
-      ggplot(aes(x=dependency, y=lineage)) +
+      ggplot(aes(x = dependency, y = lineage)) +
       geom_point(alpha = 0.4, size = 0.5) +
       geom_point(data = subset(meta_rnai, var_annotation == "damaging"), color = "red") +
       geom_point(data = subset(meta_rnai, var_annotation == "other non-conserving"), color = "blue") +
@@ -231,7 +231,7 @@ p2 <- metadata %>%
       select(depmap_id, lineage) %>%
       full_join(TPM, by = "depmap_id") %>%
       filter(gene_name == "RPL14") %>% 
-      ggplot(aes(x=lineage, y=expression, fill = lineage)) +
+      ggplot(aes(x = lineage, y = expression, fill = lineage)) +
       geom_boxplot(outlier.alpha = 0.1) +
       ggtitle("Boxplot of expression values for gene RPL14 by lineage")
 
@@ -240,8 +240,9 @@ p2 <- p2 + theme(axis.text.x = element_text(angle = 45, hjust=1)) +
 p2
 ```
 
-Below is a plot of expression vs rnai gene dependency for Rhabdomyosarcoma
-Sarcoma:
+High dependency, high expression genes are more likely to interesting research
+targets. Below is a plot of expression vs rnai gene dependency for
+Rhabdomyosarcoma Sarcoma:
 
 ```{r  message=FALSE, warning=FALSE}
 ## expression vs rnai gene dependency for Rhabdomyosarcoma Sarcoma
@@ -257,18 +258,31 @@ sarcoma_dep <- sarcoma %>%
                select(-cell_line, -primary_disease, -subtype_disease, -gene_name)
 sarcoma_exp <- sarcoma %>% left_join(tpm_sub, by = "depmap_id")
 sarcoma_dat_exp <- full_join(sarcoma_dep, sarcoma_exp,
-                             by = c("depmap_id", "gene"))
+                             by = c("depmap_id", "gene")) %>%
+                             filter(!is.na(expression))
 
-p3 <- ggplot(data=sarcoma_dat_exp, aes(x=dependency, y=expression,
-                                       text = paste("gene:", gene_name))) +
+p3 <- ggplot(data = sarcoma_dat_exp, aes(x = dependency, y = expression)) +
       geom_point(alpha = 0.4, size = 0.5) +
       geom_vline(xintercept=mean(sarcoma_dat_exp$dependency, na.rm = TRUE),
                  linetype = "dotted", color = "red") +
       geom_hline(yintercept=mean(sarcoma_dat_exp$expression, na.rm = TRUE),
                  linetype = "dotted", color = "red") +
       ggtitle("Scatterplot of rnai dependency vs expression values for gene")
-# ggplotly(p3)
 p3 + theme(axis.text.x = element_text(angle = 45))
+```
+
+A selection of the genes shown above with the lowest depenency scores.
+
+```{r}
+sarcoma_dat_exp %>% select(cell_line, gene_name, dependency, expression) %>%
+                    arrange(dependency) %>% 
+                    head(10)
+```
+
+```{r message=FALSE, warning=FALSE}
+## combine expression with mutation data
+
+## ression vs mutation
 ```
 
 Below is a boxplot displaying log genomic copy number for gene `RPL14` by
@@ -280,10 +294,10 @@ p4 <- metadata %>%
       select(depmap_id, lineage) %>%
       full_join(copyNumber, by = "depmap_id") %>%
       filter(gene_name == "RPL14") %>%
-      ggplot(aes(x=lineage, y=log_copy_number, fill = lineage)) +
+      ggplot(aes(x = lineage, y = log_copy_number, fill = lineage)) +
       geom_boxplot(outlier.alpha = 0.1) +
       ggtitle("Boxplot of log copy number for gene RPL14 by lineage")
-p4 <- p4 + theme(axis.text.x = element_text(angle = 45, hjust=1)) +
+p4 <- p4 + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
       theme(legend.position = "none")
 p4
 ```
@@ -327,7 +341,7 @@ p3 <- rnai %>%
       select(gene_name, dependency) %>%
       arrange(desc(dependency)) %>%
       top_n(20)
-p3[12, 1] <- "GAS6-AS2"
+p3[12, 1] <- "GAS6-AS2" ## shorten name so it fits on the plot
 
 p3 <- p3 %>% ggplot(aes(gene_name, dependency, color = dependency)) +
       geom_point() +
@@ -364,14 +378,14 @@ driving genes.
 # library(R.utils)
 # url <- "https://data.broadinstitute.org/ccle/CCLE_RRBS_tss_CpG_clusters_20181022.txt.gz"
 #
-RRBS_tss_CpG_clusters <-
-read.table("CCLE_RRBS_tss_CpG_clusters_20181022.txt", header = TRUE) %>%
-dplyr::rename(gene_name = cluster_id) %>%
-tidyr::gather(cell_line, methylation, -c(gene_name, CpG_sites_hg19, avg_coverage)) #%>%
-
-RRBS_tss_CpG_clusters_select <- RRBS_tss_CpG_clusters %>% filter(str_detect(gene_name, "RERG*"))
-
-View(RRBS_tss_CpG_clusters_select)
+# RRBS_tss_CpG_clusters <-
+# read.table("CCLE_RRBS_tss_CpG_clusters_20181022.txt", header = TRUE) %>%
+# dplyr::rename(gene_name = cluster_id) %>%
+# tidyr::gather(cell_line, methylation, -c(gene_name, CpG_sites_hg19, avg_coverage)) #%>%
+# 
+# RRBS_tss_CpG_clusters_select <- RRBS_tss_CpG_clusters %>% filter(str_detect(gene_name, "RERG*"))
+# 
+# View(RRBS_tss_CpG_clusters_select)
 
 # full_join(TPM, by = c("gene_name", "cell_line"))
 
@@ -379,17 +393,6 @@ View(RRBS_tss_CpG_clusters_select)
 
 # head(TPM)
 # View(mutationCalls)
-```
-
-```{r message=FALSE, warning=FALSE}
-## combine expression with mutation data
-
-
-```
-
-```{r}
-## TPM expression vs mutation
-
 ```
 
 # Discussion and Outlook
