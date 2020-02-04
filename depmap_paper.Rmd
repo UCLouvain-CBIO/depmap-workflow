@@ -56,44 +56,43 @@ intention of exploiting this knowledge to develop new therapies in precision
 cancer medicine.
 
 The Depmap initative is, as of the date of this publication, an ongoing project,
-with new data releases every 90 days. As of the most current 2019 Q4 Depmap
-release, 1756 human cancer cell lines have been mapped for dependencies. The
-primary methods utilized in the Depmap project to map genomic dependencies are
-gene knockout and gene knockdown, performed been CRISPR and RNAi, respectively.
-Genetic dependency is calculated from the observed log fold change in the amount
-of shRNA detected after gene knockout or knockdown. To correct for potential
-off-target effects of gene knockout or knockdown in overestimating dependency
-with RNAi and CRISPR, the Depmap study utilized two algorithms, DEMETER2 and
-CERES, to moderate the dependency estimation. Measurements of chemical
-dependencies were measured via Depmap PRISM viability screens that as of the
-2019 Q4 release, consisted of 4,518 compounds tested against 578 cancer cell
-lines. The Depmap project has also compiled additional datasets of detailing
-molecular biological characterization of cancer cell lines, such as genomic copy
-number, Reverse Phase Protein Array (RPPA) data, TPM gene expression data for
-protein coding genes and genomic mutation data. These datasets are updated
-quarterly on a release schedule and are publically available under
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) licence.
+with new data releases of select datasets every 90 days. As of the most current
+2019 Q4 Depmap release, 1756 human cancer cell lines have been mapped for
+dependencies. The primary methods utilized in the Depmap project to map genomic
+dependencies are gene knockout and gene knockdown, performed been CRISPR and
+RNAi, respectively. Genetic dependency is calculated from the observed log fold
+change in the amount of shRNA detected after gene knockout or knockdown. To 
+correct for potential off-target effects of gene knockout or knockdown in
+overestimating dependency with RNAi and CRISPR, the Depmap iniative utilizes two
+algorithms, DEMETER2 and CERES, to moderate the final dependency estimation.
+In addition, measurements of chemical dependencies were taken via Depmap PRISM
+viability screens that as of the 2019 Q4 release, consisted of 4,518 compounds
+tested against 578 cancer cell lines. The Depmap project has also compiled
+additional datasets of detailing molecular biological characterization of cancer
+cell lines, such as genomic copy number, Reverse Phase Protein Array (RPPA)
+data, TPM gene expression data for protein coding genes and genomic mutation
+data. These datasets are updated quarterly on a release schedule and are
+publically available under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) licence.
 
 The `depmap` Bioconductor package was created in order to maximally exploit
-these rich datasets and aides in reproducible research, by importing the data
-into the R environment. Depmap datasets were cleaned, by converting all datasets
-to the same format, adding the unique key "depmap_id" for all data tables, in
-order to make features more comparable. In addition, the Depmap datasets were
-converted to long format, to facilitate the use of common R packages such as
-`dplyr` and `ggplot2`.
+these rich datasets and to aide reproducible research, by importing the data
+into the R environment. The Depmap datasets were cleaned, by converting all
+datasets to the long format, as well as adding the unique key "depmap_id" for
+all data tables, in order to make features more comparable, facilitating the use
+of common R packages such as `dplyr` and `ggplot2`.
 
 As new Depmap datasets are released on a quarterly basis, it is not feasible to
 include all dataset files in binary directly within the directory of the
 `depmap` R package. To keep the package lightweight, the `depmap` package
 utilizes and fully depends on the `ExperimentHub` package to store and retrieve
-all versions (starting from 19Q1) of the Depmap data in the Cloud using AWS. The
-`depmap` package contains accessor functions to directly download and cache the
-most current datasets from the Cloud into the R environment. Specific datasets,
-such as older datasets, which have been used in prior research can also be
-downloaded, if desired. This feature has the added advantage of enhancing
-reproducible research, such that specific versions of Depmap data can be
-selected, in addition to having access to the most current datasets. The
-`depmap` R package is available as part of Bioconductor at:
+all versions of the Depmap data (starting from 19Q1 through 19Q4) in the Cloud
+using AWS. The `depmap` package contains accessor functions to directly download
+and cache the most current datasets from the Cloud into the R environment.
+Specific datasets, such as older datasets, which have been used in prior
+research can also be downloaded, if desired. This feature has the added
+advantage of enhancing reproducible research, such that specific versions of
+Depmap data can be selected, in addition to having access to the most current
+datasets. The `depmap` R package is available as part of Bioconductor at:
 https://bioconductor.org/packages/devel/data/experiment/html/depmap.html
 
 # Use cases
@@ -104,9 +103,9 @@ dependency score is an expression of how vital a particular gene for a given
 cancer cell line is in terms of the lethality resulting from the knockout or
 knockdown of that gene. For example, a highly negative dependency score is
 derived from a large negative log fold change in the population of cancer cells
-after gene knockout or knockdow and implies that cell line is highly dependent
-on that gene. Genes that possess such highly negative dependency scores may be
-interesting targets for research in cancer medicine.
+after gene knockout or knockdown, implying that a given cell line is highly
+dependent on that gene. Genes that possess such highly negative dependency
+scores may be interesting targets for research in cancer medicine.
 
 ```{r load_libraries, message=FALSE, warning=FALSE, echo=TRUE}
 ## load libraries
@@ -124,9 +123,9 @@ library("tidyr")
 
 The `depmap` datasets are too large to be included into the binary of the R
 package, therefore this data is stored in the Cloud. There are two ways to
-access the `depmap` datasets in this way. The latest `depmap` datasets can be
-accessed with dedicated accessor functions that download and cache the latest
-available dataset.
+access the `depmap` datasets from the Cloud. The first such way calls on
+dedicated accessor functions that download and cache the latest available
+dataset into the R environment. An example is shown below:
 
 ```{r EH, message=FALSE, warning=FALSE, echo=TRUE, eval=FALSE}
 rnai <- depmap_rnai()
@@ -141,8 +140,8 @@ drug_sensitivity <- depmap_drug_sensitivity()
 
 Alternatively, a specific dataset (from any available release) can be accessed
 with the `ExperimentHub()` accessor function, which creates an `ExperimentHub`
-object, which can be queried for specific terms, such as the unique `EH`
-number that corresponds to that dataset (e.g. `"EH3080"`). 
+object, which can be queried for specific terms. The list of datasets available
+that correspond to the query, `depmap` are shown below:
 
 ```{r EH, message=FALSE, warning=FALSE, echo=TRUE}
 ## create ExperimentHub query object
@@ -150,14 +149,12 @@ eh <- ExperimentHub()
 query(eh, "depmap")
 ```
 
-Below, specific datasets from the `19_Q3` release are downloaded via their
-unique `EH` numbers and cached into the R environment.
+Specific datasets are downloaded via their unique `EH` numbers and cached into
+the R environment. Shown below, datasets from the `19_Q3` release are downloaded
+in this way via their such as the unique `EH` numbers that corresponds each
+dataset.
 
 ```{r load_data, message=FALSE, warning=FALSE, echo=TRUE}
-## create ExperimentHub query object
-eh <- ExperimentHub()
-query(eh, "depmap")
-
 ## download and cache select datasets
 rnai <- eh[["EH3080"]]
 mutationCalls <- eh[["EH3085"]]
@@ -169,13 +166,12 @@ drug_sensitivity <- eh[["EH3087"]]
 ```
 
 By importing the `depmap` data into the R environment, the data can be mined
-more effectively, such as mining of dependency scores globally (among all cell
-lines) or for a specific type of cancer. If one interested researching soft
-tissue sarcomas and wanted to search all such cancer cell lines for the gene
-with the greatest dependency, it is possible to accomplish this task by using
-data manipulation and visualization tools `dplyr` and `ggplot2`. Below, the
-`rnai` dataset is searched for cell lines with *"SOFT_TISSUE"* in the CCLE name,
-and displaying a list of the highest dependency scores.
+more effectively. For example, if one interested researching soft tissue
+sarcomas and wanted to search all such cancer cell lines for the gene with the
+greatest dependency, it is possible to accomplish this task by using data
+manipulation and visualization tools `dplyr` and `ggplot2`. Below, the `rnai`
+dataset is selected for cell lines with *"SOFT_TISSUE"* in the CCLE name, and
+displaying a list of the highest dependency scores.
 
 ```{r, soft_tissue_cell_lines, echo=TRUE}
 ## list of dependency scores
@@ -228,7 +224,7 @@ p1 <- meta_rnai %>%
 p1
 ```
 
-Boxplot displaying expression values for gene `RPL14` by lineage
+Below is a boxplot displaying expression values for gene `RPL14` by lineage:
 
 ```{r message=FALSE, warning=FALSE}
 p2 <- metadata %>%
@@ -243,6 +239,9 @@ p2 <- p2 + theme(axis.text.x = element_text(angle = 45, hjust=1)) +
       theme(legend.position = "none")
 p2
 ```
+
+Below is a plot of expression vs rnai gene dependency for Rhabdomyosarcoma
+Sarcoma:
 
 ```{r  message=FALSE, warning=FALSE}
 ## expression vs rnai gene dependency for Rhabdomyosarcoma Sarcoma
@@ -263,14 +262,17 @@ sarcoma_dat_exp <- full_join(sarcoma_dep, sarcoma_exp,
 p3 <- ggplot(data=sarcoma_dat_exp, aes(x=dependency, y=expression,
                                        text = paste("gene:", gene_name))) +
       geom_point(alpha = 0.4, size = 0.5) +
-      geom_vline(xintercept=mean(sarcoma_dat_exp$dependency, na.rm = TRUE), linetype = "dotted", color = "red") +
-      geom_hline(yintercept=mean(sarcoma_dat_exp$expression, na.rm = TRUE), linetype = "dotted", color = "red") +
+      geom_vline(xintercept=mean(sarcoma_dat_exp$dependency, na.rm = TRUE),
+                 linetype = "dotted", color = "red") +
+      geom_hline(yintercept=mean(sarcoma_dat_exp$expression, na.rm = TRUE),
+                 linetype = "dotted", color = "red") +
       ggtitle("Scatterplot of rnai dependency vs expression values for gene")
 # ggplotly(p3)
 p3 + theme(axis.text.x = element_text(angle = 45))
 ```
 
-Boxplot displaying log genomic copy number for gene `RPL14` by lineage
+Below is a boxplot displaying log genomic copy number for gene `RPL14` by
+lineage:
 
 ```{r message=FALSE, warning=FALSE}
 # plotly plot of copy number by lineage
@@ -285,25 +287,6 @@ p4 <- p4 + theme(axis.text.x = element_text(angle = 45, hjust=1)) +
       theme(legend.position = "none")
 p4
 ```
-
-<!-- ```{r message=FALSE, warning=FALSE} -->
-<!-- # drug dependency by lineage -->
-<!-- panc <- metadata %>% -->
-<!--             select(depmap_id, cell_line, primary_disease, subtype_disease) %>% -->
-<!--             filter(primary_disease == "Liver Cancer") -->
-
-<!-- p5 <- drug_sensitivity %>% -->
-<!--       select(depmap_id, compound, dependency) %>% -->
-<!--       inner_join(panc, by = "depmap_id") %>% -->
-<!--       arrange(dependency) %>% -->
-<!--       ggplot(aes(x=cell_line, y=dependency, fill = cell_line)) + -->
-<!--       geom_boxplot(outlier.alpha = 0.1) + -->
-<!--       ggtitle("Boxplot of chemical dependency of pancreatic cell lines") -->
-<!-- p5 <- p5 + theme(axis.text.x = element_text(angle = 45, hjust=1)) + -->
-<!--       theme(legend.position = "none") -->
-<!-- p5 -->
-<!-- # ggplotly(p5) -->
-<!-- ``` -->
 
 ## Differences in RNAi and CRISPR-Cas9 dependency scores
 
@@ -386,7 +369,7 @@ read.table("CCLE_RRBS_tss_CpG_clusters_20181022.txt", header = TRUE) %>%
 dplyr::rename(gene_name = cluster_id) %>%
 tidyr::gather(cell_line, methylation, -c(gene_name, CpG_sites_hg19, avg_coverage)) #%>%
 
-RRBS_tss_CpG_clusters_select <- RRBS_tss_CpG_clusters %>% filter(str_detect(gene_name, "AGO1*"))
+RRBS_tss_CpG_clusters_select <- RRBS_tss_CpG_clusters %>% filter(str_detect(gene_name, "RERG*"))
 
 View(RRBS_tss_CpG_clusters_select)
 
