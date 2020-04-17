@@ -6,19 +6,16 @@ author:
 - name: Laurent Gatto
   affiliation: Computational Biology, UCLouvain
 date: "`r Sys.Date()`"
-output:
-  BiocStyle::html_document:
-    toc_float: true
-vignette: >
-  %\VignetteIndexEntry{depmap use cases}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\usepackage[utf8]{inputenc}
+output: BiocWorkflowTools::f1000_article
+bibliography: refs.bib
 ---
 
-```{r style, echo = FALSE, message=FALSE, warning=FALSE, results = 'asis', include=FALSE}
-BiocStyle::markdown()
-# http://bioconductor.org/packages/release/bioc/vignettes/BiocWorkflowTools/inst/doc/Generate_F1000_Latex.html
-```
+
+**R version**: `r R.version.string`
+
+**Bioconductor version**: `r BiocManager::version()`
+
+**Package**: `r packageVersion("depmap")` -->
 
 # Abstract
 
@@ -85,7 +82,7 @@ As new Depmap datasets are released on a quarterly basis, it is not feasible to
 include all dataset files in binary directly within the directory of the
 `depmap` R package. To keep the package lightweight, the `depmap` package
 utilizes and fully depends on the `ExperimentHub` package to store and retrieve
-all versions of the Depmap data (starting from 19Q1 through 19Q4) in the Cloud
+all versions of the Depmap data (starting from 19Q1 through 20Q1) in the Cloud
 using AWS. The `depmap` package contains accessor functions to directly download
 and cache the most current datasets from the Cloud into the R environment.
 Specific datasets, such as older datasets, which have been used in prior
@@ -437,6 +434,12 @@ sessionInfo()
 ```
 
 # Acknowledgements
+
+# Competing interests
+
+No competing interests were disclosed.
+
+# Grant information
 
 # References
 
