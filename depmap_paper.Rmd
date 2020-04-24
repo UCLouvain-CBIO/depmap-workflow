@@ -131,7 +131,7 @@ access the `depmap` datasets from the Cloud. The first such way calls on
 dedicated accessor functions that download and cache the latest available
 dataset into the local R environment. An example is shown below:
 
-```{r EH, message=FALSE, warning=FALSE, echo=TRUE, eval=FALSE}
+```{r EH1, message=FALSE, warning=FALSE, echo=TRUE, eval=FALSE}
 rnai <- depmap_rnai()
 crispr <- depmap_crispr()
 copyNumber <- depmap_copyNumber()
@@ -147,7 +147,7 @@ with the `ExperimentHub()` accessor function, which creates an `ExperimentHub`
 object, which can be queried for specific terms. The list of datasets available
 that correspond to the query, `depmap` are shown below:
 
-```{r EH, message=FALSE, warning=FALSE, echo=TRUE}
+```{r EH2, message=FALSE, warning=FALSE, echo=TRUE}
 ## create ExperimentHub query object
 eh <- ExperimentHub()
 query(eh, "depmap")
