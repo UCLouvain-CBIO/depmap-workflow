@@ -91,11 +91,11 @@ kable(caption = "Table of all currently available datasets for the depmap packag
 The `depmap` Bioconductor package was created in order to maximally
 exploit these rich datasets and to aide reproducible research, by
 importing the data into the R environment. The Depmap datasets were
-cleaned by converting all datasets to the long format tibbles, as well as
-adding the unique key `depmap_id` for all data tables, in order to
-make features more comparable, facilitating the use of common R
-packages such as `dplyr` [@wickham2020package] and `ggplot2`
-[@wickham2011ggplot2].
+cleaned by converting all datasets to the long format tibbles
+[@muller2017tibble], as well as adding the unique key `depmap_id` for
+all data tables, in order to make features more comparable, facilitating
+the use of common R packages such as `dplyr` [@wickham2020package]
+and `ggplot2` [@wickham2011ggplot2].
 
 As new Depmap datasets are released on a quarterly basis, it is not
 feasible to include all dataset files in binary directly within the
