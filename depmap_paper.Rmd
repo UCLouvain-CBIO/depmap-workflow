@@ -189,9 +189,9 @@ crispr %>%
 ```
 
 The gene `RPL14` appears several times in the top dependencies scores,
-and may make an interesting candidate target. Figure \@ref(fig:histrpl14)
-a plot of the `crispr` data is displayed as a histogram showing the
-distribution of dependency scores for gene `RPL14`. The red dotted
+and may make an interesting candidate target. Figure
+\@ref(fig:histrpl14) displays the `crispr` data as a histogram showing
+the distribution of dependency scores for gene `RPL14`. The red dotted
 line signifies the mean dependency score for that gene, while the blue
 dotted line signifies the global mean dependency score for all
 `crispr` measurements.
@@ -307,9 +307,9 @@ ggplot(data = sarcoma_dat_exp, aes(x = dependency, y = expression)) +
   theme(axis.text.x = element_text(angle = 45))
 ```
 
-Genes with the lowest depenency scores and highest TPM gene expression are found
-in the upper left section of the plot above. Such genes may present an example
-as interesting research targets. Below shows a table of such genes.
+Genes with the lowest depenency scores and highest TPM gene expression
+are found in the upper left section of the plot above. Such genes,
+shown below, may present an example as interesting research targets.
 
 ```{r}
 sarcoma_dat_exp %>%
