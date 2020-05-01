@@ -77,6 +77,14 @@ updated quarterly on a release schedule and are publically available
 under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 licence [@broad2020depmap].
 
+Table of all depmap datasets
+
+```{r echo=FALSE, results='asis'}
+library("knitr")
+kable(stuff, caption = "Table of all depmap datasets")
+```
+
+
 The `depmap` Bioconductor package was created in order to maximally
 exploit these rich datasets and to aide reproducible research, by
 importing the data into the R environment. The Depmap datasets were
@@ -158,9 +166,8 @@ query(eh, "depmap")
 ```
 
 Specific datasets are downloaded, cached and loaded into the workspace
-by selecting them by their unique `EH` numbers. Shown below, datasets
-of interest from the `19_Q3` release are downloaded using the unique
-`EH` numbers.
+by selecting each dataset by their unique `EH` numbers. Shown below, datasets
+from the `19_Q3` release are downloaded in this way.
 
 ```{r load_data, message=FALSE, warning=FALSE, echo=TRUE}
 ## download and cache required datasets 
@@ -195,7 +202,6 @@ the distribution of dependency scores for gene `RPL14`. The red dotted
 line signifies the mean dependency score for that gene, while the blue
 dotted line signifies the global mean dependency score for all
 `crispr` measurements.
-
 
 ```{r histrpl14, message=FALSE, warning=FALSE, fig.cap="Histogram of CRISPR dependency scores for gene RPL14."}
 mean_crispr_dep <- crispr %>% 
@@ -297,7 +303,8 @@ sarcoma_dat_exp <- dplyr::full_join(sarcoma_dep, sarcoma_exp,
 ```
 
 ```{r rhabdomyosarcoma2, message=FALSE, warning=FALSE, fig.cap = "Expression vs crispr gene dependency for Rhabdomyosarcoma."}
-ggplot(data = sarcoma_dat_exp, aes(x = dependency, y = expression)) + 
+sarcoma_dat_exp %>% 
+ggplot(aes(x = dependency, y = expression)) + 
   geom_point(alpha = 0.4, size = 0.5) +
   geom_vline(xintercept = mean(sarcoma_dat_exp$dependency, na.rm = TRUE),
              linetype = "dotted", color = "red") +
@@ -308,8 +315,9 @@ ggplot(data = sarcoma_dat_exp, aes(x = dependency, y = expression)) +
 ```
 
 Genes with the lowest depenency scores and highest TPM gene expression
-are found in the upper left section of the plot above. Such genes,
-shown below, may present an example as interesting research targets.
+are found in the upper left section of the plot above
+\@ref(fig:rhabdomyosarcoma2). Such genes, shown below, may present an example
+as interesting research targets.
 
 ```{r}
 sarcoma_dat_exp %>%
