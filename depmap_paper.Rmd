@@ -2,33 +2,29 @@
 title: "Exploiting the Depmap cancer dependency data using the depmap R package"
 author:
 - name: Theo Killian
-  affiliation: Computational Biology Unit, de Duve Institute, UCLouvain, Brussels, Belgium
+  affiliation: Computational Biology and Bioinformatics Unit, de Duve Institute, UCLouvain, Brussels, Belgium
 - name: Laurent Gatto
-  affiliation: Computational Biology Unit, de Duve Institute, UCLouvain, Brussels, Belgium
+  affiliation: Computational Biology and Bioinformatics Unit, de Duve Institute, UCLouvain, Brussels, Belgium
 date: "`r Sys.Date()`"
 output: BiocWorkflowTools::f1000_article
 bibliography: refs.bib
 ---
 
-**R version**: `r R.version.string`
-
-**Bioconductor version**: `r BiocManager::version()`
-
-**Package**: `r packageVersion("depmap")` 
 
 # Abstract
 
-The `depmap` package facilitates access in the R environment to the data from
-the Depmap project, a multi-year collaborative effort by the Broad Institute and
-Wellcome Sanger Institute, mapping genetic and chemical dependencies and other
-molecular biological measurements of over 1700 cancer cell lines. The `depmap`
-package formats this data for use of popular R data analysis and visualizing
-tools such as `dplyr` and `ggplot2` to represent and visualize these rich
-datasets. In addition, the `depmap` package utilizes `ExperimentHub`, storing
-versions of the Depmap data accessible from the Cloud, which may be selectively
-downloaded, providing a reproducible research framework to support exploiting
-this data. This paper describes a workflow demonstrating how to access and
-visualize the Depmap data in R using this package.
+The `depmap` package facilitates access in the R environment to the
+data from the Depmap project, a multi-year collaborative effort by the
+Broad Institute and Wellcome Sanger Institute, mapping genetic and
+chemical dependencies and other molecular biological measurements of
+over 1700 cancer cell lines. The `depmap` package formats this data
+for use of popular R data analysis and visualizing tools such as
+`dplyr` and `ggplot2`. In addition, the `depmap` package utilizes
+`ExperimentHub`, storing versions of the Depmap data accessible from
+the Cloud, which may be selectively downloaded, providing a
+reproducible research framework to support exploiting this data. This
+paper describes a workflow demonstrating how to access and visualize
+the Depmap data in R using this package.
 
 # Keywords
 
@@ -51,30 +47,35 @@ intended to mirror the distribution of various cancer diseases in the general
 population, with the intention of exploiting this knowledge to develop new
 therapies in precision cancer medicine [@broad2020depmap].
 
-The Depmap initative is, as of the date of this publication, an ongoing project,
-with new data releases of select datasets every 90 days. As of the most current
-`20Q1` Depmap release, 1775 human cancer cell lines have been mapped for
-dependencies [@broad2020depmap]. The primary method utilized in the Depmap
-project to map genomic dependencies is gene knockout performed by CRISPR
-[@broad2020depmap; @meyers2017computational; @dempster2019extracting; dempster2019agreement].
-Genetic dependency is calculated from the observed log fold change in the amount
-of shRNA detected after gene knockout [@cowley2014parallel; @mcfarland2018improved].
-To correct for potential off-target effects of gene knockout in overestimating
-dependency with CRISPR, the Depmap iniative utilized the CERES algorithm to
-moderate the final dependency estimation [@meyers2017computational]. It should
-be noted that due to advancements in the CERES algorithm to account for seed
-effects, the RNAi dependency has been rendered redundant, and further data
-releases for this dependency measurement have been discontinued as of `19Q3`
-[@broad2020depmap; @dempster2019extracting]. In addition genomic dependency
-measurements of cancer cell lines, chemical dependencies were taken via Depmap
-PRISM viability screens that as of the `20Q1` release, tested 4,518 compounds
-against 578 cancer cell lines [@corsello2019non; @broad2020depmap]. The Depmap
-project has also compiled additional datasets detailing molecular biological
-characterization of cancer cell lines, such as genomic copy number, Reverse
-Phase Protein Array (RPPA) data, TPM gene expression data for protein coding
-genes and genomic mutation data. These datasets are updated quarterly on a
-release schedule and are publically available under
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) licence [@broad2020depmap].
+The Depmap initative is, as of the date of this publication, an
+ongoing project, with new data releases of select datasets every 90
+days. As of the most current `20Q1` Depmap release, 1775 human cancer
+cell lines have been mapped for dependencies [@broad2020depmap]. The
+primary method utilized in the Depmap project to map genomic
+dependencies is gene knockout performed by CRISPR [@broad2020depmap;
+@meyers2017computational; @dempster2019extracting;
+@dempster2019agreement].  Genetic dependency is calculated from the
+observed log fold change in the amount of shRNA detected after gene
+knockout [@cowley2014parallel; @mcfarland2018improved].  To correct
+for potential off-target effects of gene knockout in overestimating
+dependency with CRISPR, the Depmap iniative utilized the CERES
+algorithm to moderate the final dependency estimation
+[@meyers2017computational]. It should be noted that due to
+advancements in the CERES algorithm to account for seed effects, the
+RNAi dependency has been rendered redundant, and further data releases
+for this dependency measurement have been discontinued as of `19Q3`
+[@broad2020depmap; @dempster2019extracting]. In addition genomic
+dependency measurements of cancer cell lines, chemical dependencies
+were taken via Depmap PRISM viability screens that as of the `20Q1`
+release, tested 4,518 compounds against 578 cancer cell lines
+[@corsello2019non; @broad2020depmap]. The Depmap project has also
+compiled additional datasets detailing molecular biological
+characterization of cancer cell lines, such as genomic copy number,
+Reverse Phase Protein Array (RPPA) data, TPM gene expression data for
+protein coding genes and genomic mutation data. These datasets are
+updated quarterly on a release schedule and are publically available
+under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+licence [@broad2020depmap].
 
 The `depmap` Bioconductor package was created in order to maximally
 exploit these rich datasets and to aide reproducible research, by
@@ -89,17 +90,17 @@ As new Depmap datasets are released on a quarterly basis, it is not
 feasible to include all dataset files in binary directly within the
 directory of the `depmap` R package. To keep the package lightweight,
 the `depmap` package utilizes and fully depends on the `ExperimentHub`
-package [pasolli2017accessible; @maintainer2020experimenthub] to store
-and retrieve all versions of the Depmap data (starting from `19Q1`
-through `20Q1`) in the Cloud using AWS. The `depmap` package contains
-accessor functions to directly download and cache the most current
-datasets from the Cloud into the local R environment. Specific
-datasets, such as older datasets, which have been used in prior
-research can also be downloaded, if desired. This feature has the
-added advantage of enhancing reproducible research, such that specific
-versions of Depmap data can be selected, in addition to having access
-to the most current datasets. The `depmap` R package is available as
-part of Bioconductor at:
+package [@ExperimentHub] to store and retrieve all versions of the
+Depmap data (starting from `19Q1` through `20Q1`) in the Cloud using
+AWS. The `depmap` package contains accessor functions to directly
+download and cache the most current datasets from the Cloud into the
+local R environment. Specific datasets, such as older datasets, which
+have been used in prior research can also be downloaded, if
+desired. This feature has the added advantage of enhancing
+reproducible research, such that specific versions of Depmap data can
+be selected, in addition to having access to the most current
+datasets. The `depmap` R package is available as part of Bioconductor
+at:
 [https://bioconductor.org/packages/depmap](https://bioconductor.org/packages/depmap).
 
 # Use cases
@@ -146,9 +147,9 @@ drug_sensitivity <- depmap_drug_sensitivity()
 
 Alternatively, specific dataset (from any available release) can be
 accessed through Bioconductor's `ExperimentHub`. The `ExperimentHub()`
-accessor function creates an `ExperimentHub` object, which can be
-queried for specific terms. The list of datasets available that
-correspond to the query, `depmap` are shown below:
+function creates an `ExperimentHub` object, which can be queried for
+specific terms. The list of datasets available that correspond to the
+query, `depmap` are shown below:
 
 ```{r EH2, message=FALSE, warning=FALSE, echo=TRUE}
 ## create ExperimentHub query object
@@ -158,8 +159,8 @@ query(eh, "depmap")
 
 Specific datasets are downloaded, cached and loaded into the workspace
 by selecting them by their unique `EH` numbers. Shown below, datasets
-from the `19_Q3` release are downloaded in this way via their such as
-the unique `EH` numbers that corresponds each individual dataset.
+of interest from the `19_Q3` release are downloaded using the unique
+`EH` numbers.
 
 ```{r load_data, message=FALSE, warning=FALSE, echo=TRUE}
 ## download and cache required datasets 
@@ -170,20 +171,14 @@ mutationCalls <- eh[["EH3085"]]
 copyNumber <- eh[["EH3082"]]
 ```
 
-```{r load_data2, eval=FALSE}
-## other datasets 
-rnai <- eh[["EH3080"]]
-drug_sensitivity <- eh[["EH3087"]]
-```
-
-
-By importing the `depmap` data into the R environment, the data can be mined
-more effectively. For example, if one was interested in researching soft tissue
-sarcomas and wanted to search all such cancer cell lines for the gene with the
-greatest dependency, it is possible to accomplish this task by using data
-manipulation and visualization tools `dplyr` and `ggplot2`. Below, the `crispr`
-dataset is selected for cell lines with *"SOFT_TISSUE"* in the CCLE name, and
-displaying a list of the highest dependency scores.
+By importing the `depmap` data into the R environment, the data can be
+mined more effectively. For example, if one was interested in
+researching soft tissue sarcomas and wanted to search all such cancer
+cell lines for the gene with the greatest dependency, one could
+accomplish this task by using functions from the `dplyr`
+package. Below, the `crispr` dataset is selected for cell lines with
+*"SOFT_TISSUE"* in the CCLE name, and displaying a list of the highest
+dependency scores.
 
 ```{r, soft_tissue_cell_lines, echo=TRUE}
 ## list of dependency scores
@@ -193,15 +188,16 @@ crispr %>%
   dplyr::arrange(dependency)
 ```
 
-The gene `RPL14` appears several times in the top dependencies scores, and may
-make an interesting candidate target. Below, a plot of the `crispr` data is
-displayed as a histogram showing the distribution of dependency scores for gene
-`RPL14`. The red dotted line signifies the mean dependency score for that gene,
-while the blue dotted line signifies the global mean dependency score for all
+The gene `RPL14` appears several times in the top dependencies scores,
+and may make an interesting candidate target. Figure \@ref(fig:histrpl14)
+a plot of the `crispr` data is displayed as a histogram showing the
+distribution of dependency scores for gene `RPL14`. The red dotted
+line signifies the mean dependency score for that gene, while the blue
+dotted line signifies the global mean dependency score for all
 `crispr` measurements.
 
-```{r message=FALSE, warning=FALSE}
-## Basic histogram
+
+```{r histrpl14, message=FALSE, warning=FALSE, fig.cap="Histogram of CRISPR dependency scores for gene RPL14."}
 mean_crispr_dep <- crispr %>% 
   dplyr::select(gene_name, dependency) %>% 
   dplyr::filter(gene_name == "RPL14")
@@ -213,8 +209,7 @@ crispr %>%
   geom_vline(xintercept = mean(mean_crispr_dep$dependency, na.rm = TRUE), 
              linetype = "dotted", color = "red") +
   geom_vline(xintercept = mean(crispr$dependency, na.rm = TRUE),
-             linetype = "dotted", color = "blue") +
-  ggtitle("Histogram of CRISPR dependency scores for gene RPL14")
+             linetype = "dotted", color = "blue")
 ```
 
 A more complex plot of the `crispr` data, as shown below involves plotting the
@@ -223,7 +218,7 @@ cancer, while highlighting the nature of mutations of this gene in such cancer
 cell lines (e.g. if such mutations are damaging, etc.). Notice that the
 plot above reflects the same overall distribution in two dimensions.
 
-```{r message=FALSE, warning=FALSE}
+```{r rpl14, message=FALSE, warning=FALSE, fig.cap="Plot of CRISPR dependency scores for gene RPL14 by lineage."}
 meta_crispr <- metadata %>%
   dplyr::select(depmap_id, lineage) %>%
   dplyr::full_join(crispr, by = "depmap_id") %>%
@@ -246,38 +241,37 @@ meta_crispr %>%
     geom_vline(xintercept = mean(meta_crispr$dependency, na.rm = TRUE),
                linetype = "dotted", color = "red") +
     geom_vline(xintercept = mean(crispr$dependency, na.rm = TRUE),
-               linetype = "dotted", color = "blue") +
-    ggtitle("Plot of CRISPR dep. scores for gene RPL14 by lineage")
+               linetype = "dotted", color = "blue") 
 ```
 
 Many cancer phenotypes are the result of changes in gene expression
-[@li2019changes; @hernandez2019many; @felts2019stochastic]. The extensive
-coverage of the `depmap` data affords visualization of genetic expression
-patterns across many major types of cancer. Displayed below is a boxplot
-illustrating expression values for gene `RPL14` by lineage:
+[@li2019changes; @hernandez2019many; @felts2019stochastic]. The
+extensive coverage of the `depmap` data affords visualization of
+genetic expression patterns across many major types of cancer. Figure
+\@ref(fig:tpm) below shows a boxplot illustrating expression values
+for gene `RPL14` by lineage:
 
-```{r message=FALSE, warning=FALSE}
+```{r tpm, message=FALSE, warning=FALSE, fig.cap="Boxplot of TPM expression values for gene RPL14 by lineage."}
 metadata %>%
   dplyr::select(depmap_id, lineage) %>%
   dplyr::full_join(TPM, by = "depmap_id") %>%
   dplyr::filter(gene_name == "RPL14") %>% 
   ggplot(aes(x = lineage, y = expression, fill = lineage)) +
   geom_boxplot(outlier.alpha = 0.1) +
-  ggtitle("Boxplot of TPM expression values for gene RPL14 by lineage") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   theme(legend.position = "none")
 ```
 
-Differentially expressed genes and elevated genetic dependency in cancer cell
-lines have been observed [@tsherniak2017defining; @mcfarland2018improved].
-Therefore, such genes are may present themselves as interesting research
-targets. Below is a plot of expression versus CRISPR gene dependency for
-Rhabdomyosarcoma Sarcoma. The red vertical line represents the average
-expression for this form of cancer, while the horizontal line represents the
-average dependency for this cancer.
+Differentially expressed genes and elevated genetic dependency in
+cancer cell lines have been observed [@tsherniak2017defining;
+@mcfarland2018improved]. Therefore, such genes may present themselves
+as interesting research targets. Figure \@ref(fig:rhabdomyosarcoma2)
+shows a plot of expression versus CRISPR gene dependency for
+Rhabdomyosarcoma. The red vertical line represents the average
+expression for this form of cancer, while the horizontal line
+represents the average dependency for this cancer.
 
-```{r  message=FALSE, warning=FALSE}
-## expression vs crispr gene dependency for Rhabdomyosarcoma Sarcoma
+```{r rhabdomyosarcoma1, message=FALSE, warning=FALSE}
 sarcoma <- metadata %>%
   dplyr::select(depmap_id, cell_line, primary_disease, subtype_disease) %>%
   dplyr::filter(primary_disease == "Sarcoma",
@@ -300,8 +294,10 @@ sarcoma_exp <- sarcoma %>%
 sarcoma_dat_exp <- dplyr::full_join(sarcoma_dep, sarcoma_exp,
                                     by = c("depmap_id", "gene")) %>%
                    dplyr::filter(!is.na(expression))
+```
 
-p3 <- ggplot(data = sarcoma_dat_exp, aes(x = dependency, y = expression)) + 
+```{r rhabdomyosarcoma2, message=FALSE, warning=FALSE, fig.cap = "Expression vs crispr gene dependency for Rhabdomyosarcoma."}
+ggplot(data = sarcoma_dat_exp, aes(x = dependency, y = expression)) + 
   geom_point(alpha = 0.4, size = 0.5) +
   geom_vline(xintercept = mean(sarcoma_dat_exp$dependency, na.rm = TRUE),
              linetype = "dotted", color = "red") +
@@ -321,20 +317,20 @@ sarcoma_dat_exp %>%
   dplyr::arrange(dependency, expression)
 ```
 
-Changes in genomic copy number also play a role in some cancer phenotypes
-[@meyers2017computational; @aguirre2016genomic; @shao2019copy]. The `depmap`
-data allows the display of log genomic copy number for across many cancer
-lineages. Below shows such a plot for gene `RPL14` for each major type of cancer
-lineage:
+Changes in genomic copy number also play a role in some cancer
+phenotypes [@meyers2017computational; @aguirre2016genomic;
+@shao2019copy]. The `depmap` data allows the display of log genomic
+copy number for across many cancer lineages. Figure
+\@ref(fig:boxrpl14) shows such a plot for gene `RPL14` for each major type
+of cancer lineage:
 
-```{r message=FALSE, warning=FALSE}
+```{r boxrpl14, message=FALSE, warning=FALSE, fig.cap="Boxplot of log copy number for gene RPL14 by lineage"}
 metadata %>%
   dplyr::select(depmap_id, lineage) %>%
   dplyr::full_join(copyNumber, by = "depmap_id") %>%
   dplyr::filter(gene_name == "RPL14") %>%
   ggplot(aes(x = lineage, y = log_copy_number, fill = lineage)) +
   geom_boxplot(outlier.alpha = 0.1) +
-  ggtitle("Boxplot of log copy number for gene RPL14 by lineage") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   theme(legend.position = "none")
 ```
