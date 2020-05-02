@@ -82,15 +82,24 @@ release schedule and are publically available under
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 licence [@broad2020depmap].
 
-A table of all datasets available for the `depmap` package
+A table of the most recent datasets available for the `depmap` package
 (as of 20_Q1 release) is displayed below \@ref(tab:table_of_datasets).
 
 ```{r table_of_datasets, message=FALSE, warning=FALSE, echo=FALSE, results='asis'}
 library("knitr")
 library("dplyr")
 dataset_list <- read.csv("./depmap_datasets_list.csv")
-dataset_list %>% dplyr::select(-SourceUrl) %>% 
-kable(caption = "Table of all currently available datasets for the depmap package")
+dataset_list %>% dplyr::select(-SourceUrl) %>%
+    dplyr::filter(
+        Dataset == "crispr_20Q1" |
+        Dataset == "rnai_19Q3" |
+        Dataset == "copyNumber_20Q1" |
+        Dataset == "TPM_20Q1" |
+        Dataset == "mutationCalls_20Q1" |
+        Dataset == "metadata_20Q1" |
+        Dataset == " RPPA_19Q3" |
+        Dataset == "drug_sensitivity_19Q3") %>% 
+kable(caption = "Table of newest available datasets for the depmap package")
 ```
 
 The `depmap` Bioconductor package was created in order to maximally

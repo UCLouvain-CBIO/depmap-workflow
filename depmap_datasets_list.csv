@@ -26,8 +26,8 @@ copyNumber_19Q4,WES log copy number data,"27639 genes, 1682 cell lines",35 prima
 TPM_19Q4,CCLE TPM RNAseq gene expression data for protein coding genes,"19144 genes, 1249 cancer cell lines",32 primary diseases and 34 lineages,3.11,Dec 20 2019,https://ndownloader.figshare.com/files/20234346
 mutationCalls_19Q4,"Merged mutation calls (for coding region, germline filtered) and includes data ","18798 genes, 1666 cell lines",35 primary diseases and 36 lineages,3.11,Dec 20 2019,https://ndownloader.figshare.com/files/20274747
 metadata_19Q4,Metadata for cell lines in the 19Q4 DepMap release,1756 cell lines,35 primary diseases and 37 lineages,3.11,Dec 20 2019,https://ndownloader.figshare.com/files/20274744
-crispr_20Q1,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockdout dependency data,"18333 genes, 739 cell lines",29 primary diseases and 26 lineages,3.12,Feb 20 2019,https://ndownloader.figshare.com/files/21521910
-copyNumber_20Q1,WES log copy number data,"27639 genes, 1713 cell lines",35 primary diseases and 36 lineages,3.12,Feb 20 2019,https://ndownloader.figshare.com/files/21521964
-TPM_20Q1,CCLE TPM RNAseq gene expression data for protein coding genes,"19144 genes, 1270 cancer cell lines",32 primary diseases and 34 lineages,3.12,Feb 20 2019,https://ndownloader.figshare.com/files/21521940
-mutationCalls_20Q1,"Merged mutation calls (for coding region, germline filtered) and includes data ","18802 genes, 1697 cell lines",35 primary diseases and 36 lineages,3.12,Feb 20 2019,https://ndownloader.figshare.com/files/21521967
-metadata_20Q1,Metadata for cell lines in the 20Q1 DepMap release,1775 cell lines,35 primary diseases and 37 lineages,3.12,Feb 20 2019,https://ndownloader.figshare.com/files/21522000
+crispr_20Q1,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockdout dependency data,"18333 genes, 739 cell lines",29 primary diseases and 26 lineages,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21521910
+copyNumber_20Q1,WES log copy number data,"27639 genes, 1713 cell lines",35 primary diseases and 36 lineages,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21521964
+TPM_20Q1,CCLE TPM RNAseq gene expression data for protein coding genes,"19144 genes, 1270 cancer cell lines",32 primary diseases and 34 lineages,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21521940
+mutationCalls_20Q1,"Merged mutation calls (for coding region, germline filtered) and includes data ","18802 genes, 1697 cell lines",35 primary diseases and 36 lineages,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21521967
+metadata_20Q1,Metadata for cell lines in the 20Q1 DepMap release,1775 cell lines,35 primary diseases and 37 lineages,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21522000
