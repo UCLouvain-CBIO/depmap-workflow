@@ -83,24 +83,31 @@ release schedule and are publically available under
 licence [@broad2020depmap].
 
 A table of the most recent datasets available for the `depmap` package
-(as of 20_Q1 release) is displayed below \@ref(tab:table_of_datasets).
+(as of 20_Q1 release) is displayed in table \@ref(tab:datatab).
 
-```{r table_of_datasets, message=FALSE, warning=FALSE, echo=FALSE, results='asis'}
-library("knitr")
-library("dplyr")
+```{r datatab, message=FALSE, warning=FALSE, echo=FALSE, results='asis'}
+library("kableExtra")
 dataset_list <- read.csv("./depmap_datasets_list.csv")
-dataset_list %>% dplyr::select(-SourceUrl) %>%
+datatab <- dataset_list %>%
+    dplyr::select(-SourceUrl, -BiocVersion) %>%
     dplyr::filter(
-        Dataset == "crispr_20Q1" |
-        Dataset == "rnai_19Q3" |
-        Dataset == "copyNumber_20Q1" |
-        Dataset == "TPM_20Q1" |
-        Dataset == "mutationCalls_20Q1" |
-        Dataset == "metadata_20Q1" |
-        Dataset == " RPPA_19Q3" |
-        Dataset == "drug_sensitivity_19Q3") %>% 
-kable(caption = "Table of newest available datasets for the depmap package")
+               Dataset %in% c("crispr_20Q1", "rnai_19Q3", "copyNumber_20Q1",
+                              "TPM_20Q1", "mutationCalls_20Q1",
+                              "metadata_20Q1", " RPPA_19Q3",
+                              "drug_sensitivity_19Q3")) %>%
+    dplyr::mutate(Dataset = sub("_.+$", "", Dataset)) %>%
+    dplyr::rename(Release = SourceVersion)
+
+knitr::kable(datatab,
+             format = "latex",
+             booktabs = TRUE,
+             caption = "Datasets available the depmap package. The 'Release' column indicates the most recent available release.") %>%
+    kable_styling(full_width = TRUE,
+                  latex_options = "striped",
+                  font_size = 7) %>%
+    column_spec(2, width = "5cm")
 ```
+
 
 The `depmap` Bioconductor package was created in order to maximally
 exploit these rich datasets and to aide reproducible research, by
