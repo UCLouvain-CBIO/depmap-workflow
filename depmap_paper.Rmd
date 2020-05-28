@@ -73,11 +73,13 @@ release [@broad2020depmap; @dempster2019extracting]. In addition genomic
 dependency measurements of cancer cell lines, chemical dependencies
 were also measured by the Depmap PRISM viability screens that as of the
 `20Q1` release, tested 4,518 compounds against 578 cancer cell lines
-[@corsello2019non; @broad2020depmap]. The Depmap project has also
-compiledadditional datasets detailing molecular biological characterization
-of cancer cell lines, such as genomic copy number, Reverse Phase Protein
-Array (RPPA) data, TPM gene expression data for protein coding genes
-and genomic mutation data. These datasets are updated quarterly on a
+[@corsello2019non; @broad2020depmap]. As of the `20Q2` release, a new
+protemic dataset was added that provides normalized quantitative profiling
+of proteins by mass spectrometry [@nusinow2020quantitative]. The Depmap
+project has also compiled additional datasets detailing molecular biological
+characterization of cancer cell lines, such as genomic copy number, Reverse
+Phase Protein Array (RPPA) data, TPM gene expression data for protein coding
+genes and genomic mutation data. These datasets are updated quarterly on a
 release schedule and are publically available under
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 licence [@broad2020depmap].
@@ -91,10 +93,10 @@ dataset_list <- read.csv("./depmap_datasets_list.csv")
 datatab <- dataset_list %>%
     dplyr::select(-SourceUrl, -BiocVersion) %>%
     dplyr::filter(
-               Dataset %in% c("crispr_20Q1", "rnai_19Q3", "copyNumber_20Q1",
-                              "TPM_20Q1", "mutationCalls_20Q1",
-                              "metadata_20Q1", " RPPA_19Q3",
-                              "drug_sensitivity_19Q3")) %>%
+               Dataset %in% c("crispr_20Q2", "rnai_19Q3", "copyNumber_20Q2",
+                              "TPM_20Q2", "mutationCalls_20Q2",
+                              "metadata_20Q2", " RPPA_19Q3",
+                              "drug_sensitivity_19Q3", "proteomic_20Q2")) %>%
     dplyr::mutate(Dataset = sub("_.+$", "", Dataset)) %>%
     dplyr::rename(Release = SourceVersion)
 
@@ -181,8 +183,10 @@ drug_sensitivity <- depmap_drug_sensitivity()
 Alternatively, specific dataset (from any available release) can be
 accessed through Bioconductor's `ExperimentHub`. The `ExperimentHub()`
 function creates an `ExperimentHub` object, which can be queried for
-specific terms. The list of datasets available that correspond to the
-query, `depmap` are shown below:
+specific terms. Note that the latest `depmap` datasets are only available by
+installing and running the latest `devel` version of Bioconductor. The list
+of datasets available that correspond to the query, `depmap`, running 
+Bioconductor 3.12 are shown below:
 
 ```{r EH2, message=FALSE, warning=FALSE, echo=TRUE}
 ## create ExperimentHub query object
@@ -192,15 +196,16 @@ query(eh, "depmap")
 
 Specific datasets are downloaded, cached and loaded into the workspace
 as tibbles by selecting each dataset by their unique `EH` numbers.
-Shown below, datasets from the `19_Q3` release are downloaded in this way.
+Shown below, datasets from the `20_Q1` release are downloaded in this way.
 
 ```{r load_data, message=FALSE, warning=FALSE, echo=TRUE}
 ## download and cache required datasets 
-metadata <- eh[["EH3086"]]
-crispr <- eh[["EH3081"]]
-TPM <- eh[["EH3084"]]
-mutationCalls <- eh[["EH3085"]]
-copyNumber <- eh[["EH3082"]]
+crispr <- eh[["EH3454"]]
+copyNumber <- eh[["EH3455"]]
+TPM <- eh[["EH3456"]]
+mutationCalls <- eh[["EH3457"]]
+metadata <- eh[["EH3458"]]
+proteomic <- eh[["EH3459"]]
 ```
 
 By importing the `depmap` data into the R environment, the data can be
@@ -288,8 +293,8 @@ for gene `RPL14` by lineage:
 metadata %>%
   dplyr::select(depmap_id, lineage) %>%
   dplyr::full_join(TPM, by = "depmap_id") %>%
-  dplyr::filter(gene_name == "RPL14") %>% 
-  ggplot(aes(x = lineage, y = expression, fill = lineage)) +
+  dplyr::filter(gene_name == "RPL14") %>%
+  ggplot(aes(x = lineage, y = rna_expression, fill = lineage)) +
   geom_boxplot(outlier.alpha = 0.1) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   theme(legend.position = "none")
@@ -301,7 +306,7 @@ have been reported in literature [@tsherniak2017defining;
 and high genetic dependency may present especially interesting
 research targets. Figure \@ref(fig:rhabdomyosarcoma2)
 shows a plot of expression versus CRISPR gene dependency for
-Rhabdomyosarcoma. The red vertical line represents the average
+Rhabdomyosarcoma. The red vertical line represents the average gene
 expression for this form of cancer, while the horizontal line
 represents the average dependency for this cancer type.
 
@@ -315,7 +320,7 @@ crispr_sub <- crispr %>%
   dplyr::select(depmap_id, gene, gene_name, dependency)
 
 tpm_sub <- TPM %>% 
-  dplyr::select(depmap_id, gene, gene_name, expression)
+  dplyr::select(depmap_id, gene, gene_name, rna_expression)
 
 sarcoma_dep <- sarcoma %>% 
   dplyr::left_join(crispr_sub, by = "depmap_id") %>%
@@ -327,18 +332,17 @@ sarcoma_exp <- sarcoma %>%
 
 sarcoma_dat_exp <- dplyr::full_join(sarcoma_dep, sarcoma_exp,
                                     by = c("depmap_id", "gene")) %>%
-                   dplyr::filter(!is.na(expression))
+                   dplyr::filter(!is.na(rna_expression))
 ```
 
 ```{r rhabdomyosarcoma2, message=FALSE, warning=FALSE, fig.cap = "Expression vs crispr gene dependency for Rhabdomyosarcoma."}
 sarcoma_dat_exp %>% 
-ggplot(aes(x = dependency, y = expression)) + 
+ggplot(aes(x = dependency, y = rna_expression)) + 
   geom_point(alpha = 0.4, size = 0.5) +
   geom_vline(xintercept = mean(sarcoma_dat_exp$dependency, na.rm = TRUE),
              linetype = "dotted", color = "red") +
-  geom_hline(yintercept = mean(sarcoma_dat_exp$expression, na.rm = TRUE),
+  geom_hline(yintercept = mean(sarcoma_dat_exp$rna_expression, na.rm = TRUE),
              linetype = "dotted", color = "red") +
-  ggtitle("Scatterplot of CRISPR dependency vs expression values for gene") +
   theme(axis.text.x = element_text(angle = 45))
 ```
 
@@ -349,8 +353,8 @@ highest depenency scores display increased expression.
 
 ```{r}
 sarcoma_dat_exp %>%
-  dplyr::select(cell_line, gene_name, dependency, expression) %>%
-  dplyr::arrange(dependency, expression)
+  dplyr::select(cell_line, gene_name, dependency, rna_expression) %>%
+  dplyr::arrange(dependency, rna_expression)
 ```
 
 Changes in genomic copy number may also play a role in some cancer
