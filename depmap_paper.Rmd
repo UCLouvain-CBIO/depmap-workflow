@@ -198,7 +198,7 @@ query(eh, "depmap")
 
 Specific datasets are downloaded, cached and loaded into the workspace
 as tibbles by selecting each dataset by their unique `EH` numbers.
-Shown below, datasets from the `20_Q1` release are downloaded in this way.
+Shown below, datasets from the `20_Q2` release are downloaded in this way.
 
 ```{r load_data, message=FALSE, warning=FALSE, echo=TRUE}
 ## download and cache required datasets 
