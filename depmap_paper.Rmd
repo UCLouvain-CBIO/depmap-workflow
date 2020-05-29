@@ -226,15 +226,16 @@ crispr %>%
 ```
 
 The gene `C1orf109` appears in the selected list of top dependencies scores
-for soft tissue cancer cell lines. The alias of `C1orf109` is Chromosome 1
-Open Reading Frame 109, which produces an uncharacterized protein which may
-promote cancer cell proliferation by controlling the G1 to S phase transition
-[@liu2012identification]. This protein presents as an interesting candidate
-target. Figure \@ref(fig:histC1orf109) displays the `crispr` data as a
-histogram showing the distribution of dependency scores for gene `C1orf109`.
-The red dotted line signifies the mean dependency score for that gene, while
-the blue dotted line signifies the global mean dependency score for all
-`crispr` measurements.
+for soft tissue cancer cell lines. This gene, also known by the alias
+Chromosome 1 Open Reading Frame 109, codes for a poorly characterized
+protein which is theorized to promote cancer cell proliferation by
+controlling the G1 to S phase transition [@liu2012identification]. This
+protein may present as an interesting candidate target to explore and 
+visualize the `depmap` data. Figure \@ref(fig:histC1orf109) displays the
+`crispr` data as a histogram showing the distribution of dependency scores
+for gene `C1orf109`. The red dotted line signifies the mean dependency score
+for that gene, while the blue dotted line signifies the global mean dependency
+score for all `crispr` measurements.
 
 ```{r histC1orf109, message=FALSE, warning=FALSE, fig.cap="Histogram of CRISPR dependency scores for gene C1orf109."}
 mean_crispr_dep <- crispr %>% 
@@ -288,9 +289,10 @@ meta_crispr %>%
 Many cancer phenotypes are the result of changes in gene expression
 [@li2019changes; @hernandez2019many; @felts2019stochastic]. The
 extensive coverage of the `depmap` data affords visualization of
-genetic expression patterns across many major types of cancer. Figure
-\@ref(fig:tpm) below shows a boxplot illustrating expression values
-for gene `C1orf109` by lineage:
+genetic expression patterns across many major types of cancer. Elevated
+expression of gene `C1orf109` in lung cancer tissue has been reported in
+literature [@liu2012identification]. Figure \@ref(fig:tpm) below shows a
+boxplot illustrating expression values for gene `C1orf109` by lineage:
 
 ```{r tpm, message=FALSE, warning=FALSE, fig.cap="Boxplot of TPM expression values for gene C1orf109 by lineage."}
 metadata %>%
@@ -398,7 +400,7 @@ Comprehensive R Archive Network (https://cran.r-project.org) or
 Bioconductor (http://bioconductor.org). The specific version numbers
 of R and the packages used are shown below.
 
-Note, that the latest `depmap` datasets are only available through
+Note, the latest `depmap` datasets are only available through
 `ExperimentHub` by installing and running the latest `devel` version
 of Bioconductor. To install the `devel` version of Bioconductor:
 
