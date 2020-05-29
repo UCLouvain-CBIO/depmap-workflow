@@ -185,10 +185,8 @@ proteomic <- depmap_proteomic()
 Alternatively, specific dataset (from any available release) can be
 accessed through Bioconductor's `ExperimentHub`. The `ExperimentHub()`
 function creates an `ExperimentHub` object, which can be queried for
-specific terms. Note that the latest `depmap` datasets are only available by
-installing and running the latest `devel` version of Bioconductor. The list
-of datasets available that correspond to the query, `depmap`, running 
-Bioconductor 3.12 are shown below:
+specific terms. The list of datasets available that correspond to the
+query, `depmap` are shown below:
 
 ```{r EH2, message=FALSE, warning=FALSE, echo=TRUE}
 ## create ExperimentHub query object
@@ -399,6 +397,17 @@ All packages used in this workflow are available from the
 Comprehensive R Archive Network (https://cran.r-project.org) or
 Bioconductor (http://bioconductor.org). The specific version numbers
 of R and the packages used are shown below.
+
+Note, that the latest `depmap` datasets are only available through
+`ExperimentHub` by installing and running the latest `devel` version
+of Bioconductor. To install the `devel` version of Bioconductor:
+
+```{r message=FALSE, eval=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(version = "devel")
+BiocManager::valid()              # checks for out of date packages
+```
 
 To install the `depmap` package:
 
