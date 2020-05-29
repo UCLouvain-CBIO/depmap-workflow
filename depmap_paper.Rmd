@@ -86,7 +86,7 @@ and are publically available under
 licence [@broad2020depmap].
 
 A table of the most recent datasets available for the `depmap` package
-(as of 20_Q1 release) is displayed in table \@ref(tab:datatab).
+(as of 20_Q2 release) is displayed in table \@ref(tab:datatab).
 
 ```{r datatab, message=FALSE, warning=FALSE, echo=FALSE, results='asis'}
 library("kableExtra")
@@ -145,9 +145,9 @@ and `rnai`, which contain information on genetic dependency, as well
 as the dataset `drug_sensitivity`, which contains information pertaining
 to chemical dependency. The genetic dependency can be interpreted as an
 expression of how vital a particular gene for a given cancer cell line.
-For example, a highly negative dependency score is
-derived from a large negative log fold change in the population of cancer cells
-after gene knockout or knockdown, implying that a given cell line is highly
+For example, a highly negative dependency score is derived from a large
+negative log fold change in the population of cancer cells after gene
+knockout or knockdown, implying that a given cell line is highly
 dependent on that knocked out gene. Genes that possess highly negative
 dependency scores may be interesting targets for research in cancer medicine.
 In this workflow, we will describe exploring and visualizing several Depmap
@@ -227,22 +227,25 @@ crispr %>%
   dplyr::arrange(dependency)
 ```
 
-The gene `RPL14` appears several times in the top dependencies scores,
-and may make an interesting candidate target. Figure
-\@ref(fig:histrpl14) displays the `crispr` data as a histogram showing
-the distribution of dependency scores for gene `RPL14`. The red dotted
-line signifies the mean dependency score for that gene, while the blue
-dotted line signifies the global mean dependency score for all
+The gene `C1orf109` appears in the selected list of top dependencies scores
+for soft tissue cancer cell lines. The alias of `C1orf109` is Chromosome 1
+Open Reading Frame 109, which produces an uncharacterized protein which may
+promote cancer cell proliferation by controlling the G1 to S phase transition
+[@liu2012identification]. This protein presents as an interesting candidate
+target. Figure \@ref(fig:histC1orf109) displays the `crispr` data as a
+histogram showing the distribution of dependency scores for gene `C1orf109`.
+The red dotted line signifies the mean dependency score for that gene, while
+the blue dotted line signifies the global mean dependency score for all
 `crispr` measurements.
 
-```{r histrpl14, message=FALSE, warning=FALSE, fig.cap="Histogram of CRISPR dependency scores for gene RPL14."}
+```{r histC1orf109, message=FALSE, warning=FALSE, fig.cap="Histogram of CRISPR dependency scores for gene C1orf109."}
 mean_crispr_dep <- crispr %>% 
   dplyr::select(gene_name, dependency) %>% 
-  dplyr::filter(gene_name == "RPL14")
+  dplyr::filter(gene_name == "C1orf109")
 
 crispr %>% 
   dplyr::select(gene, gene_name, dependency) %>% 
-  dplyr::filter(gene_name == "RPL14") %>% 
+  dplyr::filter(gene_name == "C1orf109") %>% 
   ggplot(aes(x = dependency)) + geom_histogram() +
   geom_vline(xintercept = mean(mean_crispr_dep$dependency, na.rm = TRUE), 
              linetype = "dotted", color = "red") +
@@ -250,19 +253,19 @@ crispr %>%
              linetype = "dotted", color = "blue")
 ```
 
-A more complex plot of the `crispr` data, is shown below \@ref(fig:rpl14).
+A more complex plot of the `crispr` data, is shown below \@ref(fig:C1orf109).
 Visualizing this data involves plotting the distribution of dependency
-scores for gene `RPL14` for each major type of cancer, while highlighting
+scores for gene `C1orf109` for each major type of cancer, while highlighting
 the qualitative nature of mutations of this gene in such cancer cell lines
 (e.g. if such mutations are damaging or conserved, etc.). Notice that the
-plot above \@ref(fig:histrpl14) reflects the same overall distribution
+plot above \@ref(fig:histC1orf109) reflects the same overall distribution
 in two dimensions.
 
-```{r rpl14, message=FALSE, warning=FALSE, fig.cap="Plot of CRISPR dependency scores for gene RPL14 by lineage."}
+```{r C1orf109, message=FALSE, warning=FALSE, fig.cap="Plot of CRISPR dependency scores for gene C1orf109 by lineage."}
 meta_crispr <- metadata %>%
   dplyr::select(depmap_id, lineage) %>%
   dplyr::full_join(crispr, by = "depmap_id") %>%
-  dplyr::filter(gene_name == "RPL14") %>% 
+  dplyr::filter(gene_name == "C1orf109") %>% 
   dplyr::full_join((mutationCalls %>%
                       dplyr::select(depmap_id, entrez_id, 
                                     is_cosmic_hotspot, 
@@ -289,13 +292,13 @@ Many cancer phenotypes are the result of changes in gene expression
 extensive coverage of the `depmap` data affords visualization of
 genetic expression patterns across many major types of cancer. Figure
 \@ref(fig:tpm) below shows a boxplot illustrating expression values
-for gene `RPL14` by lineage:
+for gene `C1orf109` by lineage:
 
-```{r tpm, message=FALSE, warning=FALSE, fig.cap="Boxplot of TPM expression values for gene RPL14 by lineage."}
+```{r tpm, message=FALSE, warning=FALSE, fig.cap="Boxplot of TPM expression values for gene C1orf109 by lineage."}
 metadata %>%
   dplyr::select(depmap_id, lineage) %>%
   dplyr::full_join(TPM, by = "depmap_id") %>%
-  dplyr::filter(gene_name == "RPL14") %>%
+  dplyr::filter(gene_name == "C1orf109") %>%
   ggplot(aes(x = lineage, y = rna_expression, fill = lineage)) +
   geom_boxplot(outlier.alpha = 0.1) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -339,13 +342,13 @@ sarcoma_dat_exp <- dplyr::full_join(sarcoma_dep, sarcoma_exp,
 
 ```{r rhabdomyosarcoma2, message=FALSE, warning=FALSE, fig.cap = "Expression vs crispr gene dependency for Rhabdomyosarcoma."}
 sarcoma_dat_exp %>% 
-ggplot(aes(x = dependency, y = rna_expression)) + 
-  geom_point(alpha = 0.4, size = 0.5) +
-  geom_vline(xintercept = mean(sarcoma_dat_exp$dependency, na.rm = TRUE),
-             linetype = "dotted", color = "red") +
-  geom_hline(yintercept = mean(sarcoma_dat_exp$rna_expression, na.rm = TRUE),
-             linetype = "dotted", color = "red") +
-  theme(axis.text.x = element_text(angle = 45))
+    ggplot(aes(x = dependency, y = rna_expression)) + 
+    geom_point(alpha = 0.4, size = 0.5) +
+    geom_vline(xintercept = mean(sarcoma_dat_exp$dependency, na.rm = TRUE),
+               linetype = "dotted", color = "red") +
+    geom_hline(yintercept = mean(sarcoma_dat_exp$rna_expression, na.rm = TRUE),
+               linetype = "dotted", color = "red") +
+    theme(axis.text.x = element_text(angle = 45))
 ```
 
 Genes with the highest depenency scores and highest TPM gene expression
@@ -363,14 +366,14 @@ Changes in genomic copy number may also play a role in some cancer
 phenotypes [@meyers2017computational; @aguirre2016genomic;
 @shao2019copy]. The `depmap` data allows the display of log genomic
 copy number for across many cancer lineages. Figure
-\@ref(fig:boxrpl14) shows such a plot for gene `RPL14` for each major type
+\@ref(fig:boxC1orf109) shows such a plot for gene `C1orf109` for each major type
 of cancer lineage:
 
-```{r boxrpl14, message=FALSE, warning=FALSE, fig.cap="Boxplot of log copy number for gene RPL14 by lineage"}
+```{r boxC1orf109, message=FALSE, warning=FALSE, fig.cap="Boxplot of log copy number for gene C1orf109 by lineage"}
 metadata %>%
   dplyr::select(depmap_id, lineage) %>%
   dplyr::full_join(copyNumber, by = "depmap_id") %>%
-  dplyr::filter(gene_name == "RPL14") %>%
+  dplyr::filter(gene_name == "C1orf109") %>%
   ggplot(aes(x = lineage, y = log_copy_number, fill = lineage)) +
   geom_boxplot(outlier.alpha = 0.1) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
