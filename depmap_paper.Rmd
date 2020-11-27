@@ -2,7 +2,7 @@
 title: "Exploiting the Depmap cancer dependency data using the depmap R package"
 author:
 - name: Theo Killian
-  affiliation: Computational Biology and Bioinformatics Unit, de Duve Institute, UCLouvain, Brussels, Belgium
+  affiliation: VIB-KULeuven Center for Cancer Biology, Leuven, Belgium
 - name: Laurent Gatto
   affiliation: Computational Biology and Bioinformatics Unit, de Duve Institute, UCLouvain, Brussels, Belgium
 date: "`r Sys.Date()`"
@@ -53,7 +53,7 @@ medicine [@broad2020depmap].
 
 The Depmap initative is, as of the date of this publication, an
 ongoing project, with new data releases of select datasets every 90
-days. As of the most current `20Q2` Depmap release, 1804 human cancer
+days. As of the most current `20Q4` Depmap release, 1812 human cancer
 cell lines have been mapped for dependencies [@broad2020depmap]. The
 Depmap project utilizes CRISPR gene knockout as the primary method to
 map genomic dependencies in cancer cell lines 
@@ -72,7 +72,7 @@ releases for RNAi dependency measurement have been discontinued as of the
 `19Q3` release [@broad2020depmap; @dempster2019extracting]. In addition to
 genomic dependency measurements of cancer cell lines, chemical dependencies
 were also measured by the Depmap PRISM viability screens that as of the
-`20Q2` release, tested 4,518 compounds against 578 cancer cell lines
+`20Q4` release, tested 4,518 compounds against 578 cancer cell lines
 [@corsello2019non; @broad2020depmap]. A new protemic dataset was added with
 the `20Q2` release, that provides normalized quantitative profiling of
 proteins of 375 cancer cell lines by mass spectrometry
@@ -86,7 +86,7 @@ and are publically available under
 licence [@broad2020depmap].
 
 A table of the most recent datasets available for the `depmap` package
-(as of 20_Q2 release) is displayed in table \@ref(tab:datatab).
+(as of `20Q4` release) is displayed in table \@ref(tab:datatab).
 
 ```{r datatab, message=FALSE, warning=FALSE, echo=FALSE, results='asis'}
 library("kableExtra")
@@ -94,9 +94,9 @@ dataset_list <- read.csv("./depmap_datasets_list.csv")
 datatab <- dataset_list %>%
     dplyr::select(-SourceUrl, -BiocVersion) %>%
     dplyr::filter(
-               Dataset %in% c("crispr_20Q2", "rnai_19Q3", "copyNumber_20Q2",
-                              "TPM_20Q2", "mutationCalls_20Q2",
-                              "metadata_20Q2", " RPPA_19Q3",
+               Dataset %in% c("crispr_20Q4", "rnai_19Q3", "copyNumber_20Q4",
+                              "TPM_20Q4", "mutationCalls_20Q4",
+                              "metadata_20Q4", " RPPA_19Q3",
                               "drug_sensitivity_19Q3", "proteomic_20Q2")) %>%
     dplyr::mutate(Dataset = sub("_.+$", "", Dataset)) %>%
     dplyr::rename(Release = SourceVersion)
@@ -104,7 +104,9 @@ datatab <- dataset_list %>%
 knitr::kable(datatab,
              format = "latex",
              booktabs = TRUE,
-             caption = "Datasets available the depmap package. The 'Release' column indicates the most recent available release.") %>%
+             caption = paste0("Datasets available the depmap package. The ",
+                              "'Release' column indicates the most recent ",
+                              "available release.")) %>%
     kable_styling(full_width = TRUE,
                   latex_options = "striped",
                   font_size = 7) %>%
@@ -127,7 +129,7 @@ feasible to include all dataset files in binary directly within the
 directory of the `depmap` R package. To keep the package lightweight,
 the `depmap` package utilizes and fully depends on the `ExperimentHub`
 package [@ExperimentHub] to store and retrieve all versions of the
-Depmap data (starting from `19Q1` through `20Q2`) in the Cloud using
+Depmap data (starting from `19Q1` through `20Q4`) in the Cloud using
 AWS. The `depmap` package contains accessor functions to directly
 download and cache the most current datasets from the Cloud into the
 local R environment. Specific datasets (such as datasets from older releases),
@@ -196,15 +198,15 @@ query(eh, "depmap")
 
 Specific datasets are downloaded, cached and loaded into the workspace
 as tibbles by selecting each dataset by their unique `EH` numbers.
-Shown below, datasets from the `20_Q2` release are downloaded in this way.
+Shown below, datasets from the `20_Q3` release are downloaded in this way.
 
 ```{r load_data, message=FALSE, warning=FALSE, echo=TRUE}
 ## download and cache required datasets 
-crispr <- eh[["EH3454"]]
-copyNumber <- eh[["EH3455"]]
-TPM <- eh[["EH3456"]]
-mutationCalls <- eh[["EH3457"]]
-metadata <- eh[["EH3458"]]
+crispr <- eh[["EH3797"]]
+copyNumber <- eh[["EH3798"]]
+TPM <- eh[["EH3799"]]
+mutationCalls <- eh[["EH3800"]]
+metadata <- eh[["EH3801"]]
 proteomic <- eh[["EH3459"]]
 ```
 
