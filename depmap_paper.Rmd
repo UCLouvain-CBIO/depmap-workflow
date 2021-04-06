@@ -2,9 +2,12 @@
 title: "Exploiting the Depmap cancer dependency data using the depmap R package"
 author:
 - name: Theo Killian
-  affiliation: VIB-KULeuven Center for Cancer Biology, Leuven, Belgium
+  affiliation:
+  - "Computational Biology and Bioinformatics Unit, de Duve Institute, UCLouvain, Brussels, Belgium."
+  - "Current address: VIB-KULeuven Center for Cancer Biology, Leuven, Belgium."
 - name: Laurent Gatto
-  affiliation: Computational Biology and Bioinformatics Unit, de Duve Institute, UCLouvain, Brussels, Belgium
+  affiliation: Computational Biology and Bioinformatics Unit, de Duve Institute, UCLouvain, Brussels, Belgium.
+  email: laurent.gatto@uclouvain.be
 date: "`r Sys.Date()`"
 output: BiocWorkflowTools::f1000_article
 bibliography: refs.bib
@@ -28,7 +31,7 @@ the Depmap data in R using this package.
 
 # Keywords
 
-cancer, cancer dependency, Depmap, ExperimentHub, data mining, 
+cancer, cancer dependency, Depmap, ExperimentHub, data mining,
 reproducible research, Bioconductor
 
 # Introduction
@@ -56,7 +59,7 @@ ongoing project, with new data releases of select datasets every 90
 days. As of the most current `20Q4` Depmap release, 1812 human cancer
 cell lines have been mapped for dependencies [@broad2020depmap]. The
 Depmap project utilizes CRISPR gene knockout as the primary method to
-map genomic dependencies in cancer cell lines 
+map genomic dependencies in cancer cell lines
 [@broad2020depmap; @meyers2017computational; @dempster2019extracting;
 @dempster2019agreement]. The resulting genetic dependency score displayed
 in the Depmap data is calculated from the observed log fold change in the
@@ -201,7 +204,7 @@ as tibbles by selecting each dataset by their unique `EH` numbers.
 Shown below, datasets from the `20_Q3` release are downloaded in this way.
 
 ```{r load_data, message=FALSE, warning=FALSE, echo=TRUE}
-## download and cache required datasets 
+## download and cache required datasets
 crispr <- eh[["EH3797"]]
 copyNumber <- eh[["EH3798"]]
 TPM <- eh[["EH3799"]]
@@ -221,7 +224,7 @@ dependency scores.
 
 ```{r, soft_tissue_cell_lines, echo=TRUE}
 ## list of dependency scores
-crispr %>% 
+crispr %>%
   dplyr::select(cell_line, gene_name, dependency) %>%
   dplyr::filter(stringr::str_detect(cell_line, "SOFT_TISSUE")) %>%
   dplyr::arrange(dependency)
@@ -232,7 +235,7 @@ for soft tissue cancer cell lines. This gene, also known by the alias
 Chromosome 1 Open Reading Frame 109, codes for a poorly characterized
 protein which is theorized to promote cancer cell proliferation by
 controlling the G1 to S phase transition [@liu2012identification]. This
-protein may present as an interesting candidate target to explore and 
+protein may present as an interesting candidate target to explore and
 visualize the `depmap` data. Figure \@ref(fig:histC1orf109) displays the
 `crispr` data as a histogram showing the distribution of dependency scores
 for gene `C1orf109`. The red dotted line signifies the mean dependency score
@@ -240,15 +243,15 @@ for that gene, while the blue dotted line signifies the global mean dependency
 score for all `crispr` measurements.
 
 ```{r histC1orf109, message=FALSE, warning=FALSE, fig.cap="Histogram of CRISPR dependency scores for gene C1orf109."}
-mean_crispr_dep <- crispr %>% 
-  dplyr::select(gene_name, dependency) %>% 
+mean_crispr_dep <- crispr %>%
+  dplyr::select(gene_name, dependency) %>%
   dplyr::filter(gene_name == "C1orf109")
 
-crispr %>% 
-  dplyr::select(gene, gene_name, dependency) %>% 
-  dplyr::filter(gene_name == "C1orf109") %>% 
+crispr %>%
+  dplyr::select(gene, gene_name, dependency) %>%
+  dplyr::filter(gene_name == "C1orf109") %>%
   ggplot(aes(x = dependency)) + geom_histogram() +
-  geom_vline(xintercept = mean(mean_crispr_dep$dependency, na.rm = TRUE), 
+  geom_vline(xintercept = mean(mean_crispr_dep$dependency, na.rm = TRUE),
              linetype = "dotted", color = "red") +
   geom_vline(xintercept = mean(crispr$dependency, na.rm = TRUE),
              linetype = "dotted", color = "blue")
@@ -266,18 +269,18 @@ in two dimensions.
 meta_crispr <- metadata %>%
   dplyr::select(depmap_id, lineage) %>%
   dplyr::full_join(crispr, by = "depmap_id") %>%
-  dplyr::filter(gene_name == "C1orf109") %>% 
+  dplyr::filter(gene_name == "C1orf109") %>%
   dplyr::full_join((mutationCalls %>%
-                      dplyr::select(depmap_id, entrez_id, 
-                                    is_cosmic_hotspot, 
-                                    var_annotation)), 
+                      dplyr::select(depmap_id, entrez_id,
+                                    is_cosmic_hotspot,
+                                    var_annotation)),
                    by = c("depmap_id", "entrez_id"))
 
 meta_crispr %>%
     ggplot(aes(x = dependency, y = lineage)) +
     geom_point(alpha = 0.4, size = 0.5) +
     geom_point(data = subset(meta_crispr,
-                             var_annotation == "damaging"), 
+                             var_annotation == "damaging"),
                color = "red") +
     geom_point(data = subset(meta_crispr,
                              var_annotation == "other non-conserving"),
@@ -285,7 +288,7 @@ meta_crispr %>%
     geom_vline(xintercept = mean(meta_crispr$dependency, na.rm = TRUE),
                linetype = "dotted", color = "red") +
     geom_vline(xintercept = mean(crispr$dependency, na.rm = TRUE),
-               linetype = "dotted", color = "blue") 
+               linetype = "dotted", color = "blue")
 ```
 
 Many cancer phenotypes are the result of changes in gene expression
@@ -323,18 +326,18 @@ sarcoma <- metadata %>%
   dplyr::filter(primary_disease == "Sarcoma",
                 subtype_disease == "Rhabdomyosarcoma")
 
-crispr_sub <- crispr %>% 
+crispr_sub <- crispr %>%
   dplyr::select(depmap_id, gene, gene_name, dependency)
 
-tpm_sub <- TPM %>% 
+tpm_sub <- TPM %>%
   dplyr::select(depmap_id, gene, gene_name, rna_expression)
 
-sarcoma_dep <- sarcoma %>% 
+sarcoma_dep <- sarcoma %>%
   dplyr::left_join(crispr_sub, by = "depmap_id") %>%
   dplyr::select(-cell_line, -primary_disease,
                 -subtype_disease, -gene_name)
 
-sarcoma_exp <- sarcoma %>% 
+sarcoma_exp <- sarcoma %>%
   dplyr::left_join(tpm_sub, by = "depmap_id")
 
 sarcoma_dat_exp <- dplyr::full_join(sarcoma_dep, sarcoma_exp,
@@ -343,8 +346,8 @@ sarcoma_dat_exp <- dplyr::full_join(sarcoma_dep, sarcoma_exp,
 ```
 
 ```{r rhabdomyosarcoma2, message=FALSE, warning=FALSE, fig.cap = "Expression vs crispr gene dependency for Rhabdomyosarcoma."}
-sarcoma_dat_exp %>% 
-    ggplot(aes(x = dependency, y = rna_expression)) + 
+sarcoma_dat_exp %>%
+    ggplot(aes(x = dependency, y = rna_expression)) +
     geom_point(alpha = 0.4, size = 0.5) +
     geom_vline(xintercept = mean(sarcoma_dat_exp$dependency, na.rm = TRUE),
                linetype = "dotted", color = "red") +
@@ -432,4 +435,3 @@ No competing interests were disclosed.
 # Grant information
 
 # References
-
