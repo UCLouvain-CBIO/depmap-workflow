@@ -1,5 +1,5 @@
 ---
-title: "Exploiting the Depmap cancer dependency data using the depmap R package"
+title: "Exploiting the DepMap cancer dependency data using the depmap R package"
 author:
 - name: Theo Killian
   affiliation:
@@ -17,21 +17,21 @@ bibliography: refs.bib
 # Abstract
 
 The `depmap` package facilitates access in the R environment to the
-data from the Depmap project, a multi-year collaborative effort by the
+data from the DepMap project, a multi-year collaborative effort by the
 Broad Institute and Wellcome Sanger Institute, mapping genetic and
 chemical dependencies and other molecular biological measurements of
 over 1700 cancer cell lines. The `depmap` package formats this data
 for use of popular R data analysis and visualizing tools such as
 `dplyr` and `ggplot2`. In addition, the `depmap` package utilizes
-`ExperimentHub`, storing versions of the Depmap data accessible from
+`ExperimentHub`, storing versions of the DepMap data accessible from
 the Cloud, which may be selectively downloaded, providing a
 reproducible research framework to support exploiting this data. This
 paper describes a workflow demonstrating how to access and visualize
-the Depmap data in R using this package.
+the DepMap data in R using this package.
 
 # Keywords
 
-cancer, cancer dependency, Depmap, ExperimentHub, data mining,
+cancer, cancer dependency, DepMap, ExperimentHub, data mining,
 reproducible research, Bioconductor
 
 # Introduction
@@ -44,29 +44,29 @@ but essential for the vitality of particular cancer cell line. However,
 the exact biological nature of many genetic dependencies of cancer are not
 completely understood [@tsherniak2017defining]. A map that illustrates the
 relationships between the genetic features of cancer and those of cancer
-dependencies is therefore desirable. The Cancer Dependency Map or "Depmap",
+dependencies is therefore desirable. The Cancer Dependency Map or "DepMap",
 a collaborative initiative between the Broad Institute and the Wellcome
 Sanger Institute, aims to map genetic dependencies in a broad range of
 cancer cell lines. Hundreds of cancer cell lines have been selected to be
 tested in this effort, intended to mirror the distribution of various cancer
-diseases in the general population. The stated aim of the Depmap Project is
+diseases in the general population. The stated aim of the DepMap Project is
 developing a better understanding of the molecular biology of cancer and
 the exploiting this knowledge to develop new therapies in precision cancer
 medicine [@broad2020depmap].
 
-The Depmap initative is, as of the date of this publication, an
+The DepMap initative is, as of the date of this publication, an
 ongoing project, with new data releases of select datasets every 90
-days. As of the most current `20Q4` Depmap release, 1812 human cancer
+days. As of the most current `20Q4` DepMap release, 1812 human cancer
 cell lines have been mapped for dependencies [@broad2020depmap]. The
-Depmap project utilizes CRISPR gene knockout as the primary method to
+DepMap project utilizes CRISPR gene knockout as the primary method to
 map genomic dependencies in cancer cell lines
 [@broad2020depmap; @meyers2017computational; @dempster2019extracting;
 @dempster2019agreement]. The resulting genetic dependency score displayed
-in the Depmap data is calculated from the observed log fold change in the
+in the DepMap data is calculated from the observed log fold change in the
 amount of shRNA detected in pooled cancer cell lines after gene
 knockout [@cowley2014parallel; @mcfarland2018improved]. To correct
 for potential off-target effects of gene knockout in overestimating
-dependency with CRISPR, the Depmap iniative utilized the CERES
+dependency with CRISPR, the DepMap iniative utilized the CERES
 algorithm to moderate the final dependency score estimation
 [@meyers2017computational]. It should be noted that due to advancements
 in the CERES algorithm to account for CRISPR seed effects, the RNAi
@@ -74,12 +74,12 @@ dependency measurements have been rendered redundant, and further data
 releases for RNAi dependency measurement have been discontinued as of the
 `19Q3` release [@broad2020depmap; @dempster2019extracting]. In addition to
 genomic dependency measurements of cancer cell lines, chemical dependencies
-were also measured by the Depmap PRISM viability screens that as of the
+were also measured by the DepMap PRISM viability screens that as of the
 `20Q4` release, tested 4,518 compounds against 578 cancer cell lines
 [@corsello2019non; @broad2020depmap]. A new protemic dataset was added with
 the `20Q2` release, that provides normalized quantitative profiling of
 proteins of 375 cancer cell lines by mass spectrometry
-[@nusinow2020quantitative]. The Depmap project has also compiled additional
+[@nusinow2020quantitative]. The DepMap project has also compiled additional
 datasets detailing molecular biological characterization of cancer cell
 lines, such as genomic copy number, Reverse Phase Protein Array (RPPA)
 data, TPM gene expression data for protein coding genes and genomic
@@ -127,12 +127,12 @@ addition of the the unique key `depmap_id` aides the comparison of
 molecular features and the use of common R packages such as `dplyr`
 [@wickham2020package] and `ggplot2` [@wickham2011ggplot2].
 
-As new Depmap datasets are released on a quarterly basis, it is not
+As new DepMap datasets are released on a quarterly basis, it is not
 feasible to include all dataset files in binary directly within the
 directory of the `depmap` R package. To keep the package lightweight,
 the `depmap` package utilizes and fully depends on the `ExperimentHub`
 package [@ExperimentHub] to store and retrieve all versions of the
-Depmap data (starting from `19Q1` through `20Q4`) in the Cloud using
+DepMap data (starting from `19Q1` through `20Q4`) in the Cloud using
 AWS. The `depmap` package contains accessor functions to directly
 download and cache the most current datasets from the Cloud into the
 local R environment. Specific datasets (such as datasets from older releases),
@@ -144,7 +144,7 @@ is available as part of Bioconductor at:
 
 # Use cases
 
-Dependency scores are the features of primary interest in the Depmap
+Dependency scores are the features of primary interest in the DepMap
 Project datasets. These measurements can be found in datasets `crispr`
 and `rnai`, which contain information on genetic dependency, as well
 as the dataset `drug_sensitivity`, which contains information pertaining
@@ -155,7 +155,7 @@ negative log fold change in the population of cancer cells after gene
 knockout or knockdown, implying that a given cell line is highly
 dependent on that knocked out gene. Genes that possess highly negative
 dependency scores may be interesting targets for research in cancer medicine.
-In this workflow, we will describe exploring and visualizing several Depmap
+In this workflow, we will describe exploring and visualizing several DepMap
 datasets, including those that contain information on genetic dependency.
 
 Below, we start by loading the packages need to run this workflow.
@@ -388,12 +388,12 @@ metadata %>%
 # Discussion and outlook
 
 We hope that this package will be used by cancer researchers to dig deeper into
-the Depmap data and to support their research. Additionally, we highly encourage
+the DepMap data and to support their research. Additionally, we highly encourage
 future `depmap` users to combine `depmap` data with other datasets of interest,
 such as `TCGA` and `CCLE`.
 
 The depmap R package will continue to be maintained in line with the biannual
-Bioconductor release, in addition to quarterly releases of Depmap data.
+Bioconductor release, in addition to quarterly releases of DepMap data.
 
 We welcome feedback and questions from the community. We also highly appreciate
 contributions to the code in the form of pull requests.
