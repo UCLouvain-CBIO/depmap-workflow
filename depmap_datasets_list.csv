@@ -1,49 +1,83 @@
-Dataset,Description,EH_Number,Dimensions,Coverage,BiocVersion,SourceVersion,SourceUrl
-rnai_19Q1,(DEMETER2) Batch and off-target corrected RNAi gene knockdown dependency data,EH2260,"17309 genes, 711 cancer cell lines",30 primary diseases and 31 lineages,3.1,Feb 19 2019,https://ndownloader.figshare.com/files/13515395
-crispr_19Q1,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockdout dependency data,EH2261,"17634 genes, 558 cell lines",26 primary diseases and 28 lineages,3.1,Feb 19 2019,https://ndownloader.figshare.com/files/14221385
-copyNumber_19Q1,WES log copy number data,EH2262,"23299 genes, 1604 cell lines",38 primary diseases and 33 lineages,3.1,Feb 19 2019,https://depmap.org/portal/download/api/download/external?file_name=ccle%2Fdepmap-wes-cn-data-97cc.14%2Fpublic_19Q1_gene_cn.csv
-RPPA_19Q1,Reverse Phase Protein Array (RPPA) Western Blot expression data,EH2263,"214 genes, 899 cancer cell lines",28 primary diseases and 28 lineages,3.1,Feb 19 2019,https://depmap.org/portal/download/api/download/external?file_name=ccle%2Fdepmap-rnaseq-expression-data-ccd0.12%2FCCLE_depMap_19Q1_TPM.csv
-TPM_19Q1,CCLE TPM RNAseq gene expression data for protein coding genes,EH2264,"57820 genes, 1165 cancer cell lines",33 primary diseases and 32 lineages,3.1,Feb 19 2019,https://depmap.org/portal/download/api/download/external?file_name=ccle%2FCCLE_RPPA_20180123.csv
-mutationCalls_19Q1,"Merged mutation calls (for coding region, germline filtered)",EH2265,"18755 genes, 1601 cell lines",37 primary diseases and 33 lineages,3.1,Feb 19 2019,https://depmap.org/portal/download/api/download/external?file_name=ccle%2Fdepmap-mutation-calls-9a1a.7%2Fdepmap_19Q1_mutation_calls.csv
-metadata_19Q1,Metadata for cell lines in the 19Q1 DepMap release,EH2266,1677 cell lines,38 primary diseases and 33 lineages,3.1,Feb 19 2019,https://depmap.org/portal/download/api/download/external?file_name=processed_portal_downloads%2Fdepmap-public-cell-line-metadata-183e.4%2FDepMap-2019q1-celllines_v2.csv
-rnai_19Q2,(DEMETER2) Batch and off-target corrected RNAi gene knockdown dependency data,EH2550,"17309 genes, 712 cancer cell lines",30 primary diseases and 31 lineages,3.1,May 7 2019,https://ndownloader.figshare.com/files/13515395
-crispr_19Q2,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockdout dependency data,EH2551,"17634 genes, 563 cell lines",27 primary diseases and 29 lineages,3.1,May 7 2019,https://ndownloader.figshare.com/files/15023465
-copyNumber_19Q2,WES log copy number data,EH2552,"23299 genes, 1627 cell lines",38 primary diseases and 34 lineages,3.1,May 7 2019,https://ndownloader.figshare.com/files/15023495
-RPPA_19Q2,Reverse Phase Protein Array (RPPA) Western Blot expression data,EH2553,"214 genes, 899 cancer cell lines",28 primary diseases and 28 lineages,3.1,May 7 2019,https://depmap.org/portal/download/api/download/external?file_name=ccle%2FCCLE_RPPA_20180123.csv
-TPM_19Q2,CCLE TPM RNAseq gene expression data for protein coding genes,EH2554,"19144 genes, 1165 cancer cell lines",34 primary diseases and 33 lineages,3.1,May 7 2019,https://ndownloader.figshare.com/files/15023483
-mutationCalls_19Q2,"Merged mutation calls (for coding region, germline filtered) data ",EH2555,"18796 genes, 1631 cell lines",37 primary diseases and 34 lineages,3.1,May 7 2019,https://ndownloader.figshare.com/files/15023498
-metadata_19Q2,Metadata for cell lines in the 19Q2 DepMap release,EH2556,1714 cell lines,39 primary diseases and 34 lineages,3.1,May 7 2019,https://ndownloader.figshare.com/files/15023525
-rnai_19Q3,(DEMETER2) Batch and off-target corrected RNAi gene knockdown dependency data,EH3080,"17309 genes, 712 cancer cell lines",31 primary diseases and 31 lineages,3.1,Aug 7 2019,https://ndownloader.figshare.com/files/13515395
-crispr_19Q3,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockdout dependency data,EH3081,"18333 genes, 625 cell lines",28 primary diseases and 29 lineages,3.1,Aug 7 2019,https://ndownloader.figshare.com/files/16757666
-copyNumber_19Q3,WES log copy number data,EH3082,"27562 genes, 1657 cell lines",36 primary diseases and 34 lineages,3.1,Aug 7 2019,https://ndownloader.figshare.com/files/16757699
-RPPA_19Q3,Reverse Phase Protein Array (RPPA) Western Blot expression data,EH3083,"214 genes, 899 cancer cell lines",28 primary diseases and 28 lineages,3.1,Aug 7 2019,https://depmap.org/portal/download/api/download/external?file_name=ccle%2Fccle_2019%2FCCLE_RPPA_20181003.csv
-TPM_19Q3,CCLE TPM RNAseq gene expression data for protein coding genes,EH3084,"19144 genes, 1210 cancer cell lines",32 primary diseases and 33 lineages,3.1,Aug 7 2019,https://ndownloader.figshare.com/files/16757690
-mutationCalls_19Q3,"Merged mutation calls (for coding region, germline filtered)",EH3085,"18798 genes, 1656 cell lines",36 primary diseases and 34 lineages,3.1,Aug 7 2019,https://ndownloader.figshare.com/files/16757702
-metadata_19Q3,Metadata for cell lines in the 19Q3 DepMap release,EH3086,1736 cell lines,37 primary diseases and 34 lineages,3.1,Aug 7 2019,https://ndownloader.figshare.com/files/16757723
-drug_sensitivity_19Q3,Drug sensitivity data for cancer cell lines derived from logfold change values relative to DMSO,EH3087,"4686 compounds, 578 cell lines",23 primary diseases and 25 lineages,3.1,Aug 7 2019,https://ndownloader.figshare.com/files/17008628
-crispr_19Q4,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockdout dependency data,EH3240,"18333 genes, 689 cell lines",29 primary diseases and 26 lineages,3.11,Dec 20 2019,https://ndownloader.figshare.com/files/20234073
-copyNumber_19Q4,WES log copy number data,EH3241,"27639 genes, 1682 cell lines",35 primary diseases and 36 lineages,3.11,Dec 20 2019,https://ndownloader.figshare.com/files/20234367
-TPM_19Q4,CCLE TPM RNAseq gene expression data for protein coding genes,EH3242,"19144 genes, 1249 cancer cell lines",32 primary diseases and 34 lineages,3.11,Dec 20 2019,https://ndownloader.figshare.com/files/20234346
-mutationCalls_19Q4,"Merged mutation calls (for coding region, germline filtered)",EH3243,"18798 genes, 1666 cell lines",35 primary diseases and 36 lineages,3.11,Dec 20 2019,https://ndownloader.figshare.com/files/20274747
-metadata_19Q4,Metadata for cell lines in the 19Q4 DepMap release,EH3244,1756 cell lines,35 primary diseases and 37 lineages,3.11,Dec 20 2019,https://ndownloader.figshare.com/files/20274744
-crispr_20Q1,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockdout dependency data,EH3290,"18333 genes, 739 cell lines",29 primary diseases and 26 lineages,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21521910
-copyNumber_20Q1,WES log copy number data,EH3291,"27639 genes, 1713 cell lines",35 primary diseases and 36 lineages,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21521964
-TPM_20Q1,CCLE TPM RNAseq gene expression data for protein coding genes,EH3292,"19144 genes, 1270 cancer cell lines",32 primary diseases and 34 lineages,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21521940
-mutationCalls_20Q1,"Merged mutation calls (for coding region, germline filtered)",EH3293,"18802 genes, 1697 cell lines",35 primary diseases and 36 lineages,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21521967
-metadata_20Q1,Metadata for cell lines in the 20Q1 DepMap release,EH3294,1775 cell lines,35 primary diseases and 37 lineages,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21522000
-crispr_20Q2,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockdout dependency data,EH3454,"18119 genes, 769 cell lines",29 primary diseases and 26 lineages,3.12,May 20 2020,https://ndownloader.figshare.com/files/22629068
-copyNumber_20Q2,WES log copy number data,EH3455,"27639 genes, 1745 cell lines",35 primary diseases and 37 lineages,3.12,May 20 2020,https://ndownloader.figshare.com/files/22629107
-TPM_20Q2,CCLE TPM RNAseq gene expression data for protein coding genes,EH3456,"19144 genes, 1304 cancer cell lines",35 primary diseases and 37 lineages,3.12,May 20 2020,https://ndownloader.figshare.com/files/22629092
-mutationCalls_20Q2,"Merged mutation calls (for coding region, germline filtered) ",EH3457,"18802 genes, 1741 cell lines",32 primary diseases and 34 lineages,3.12,May 20 2020,https://ndownloader.figshare.com/files/22629110
-metadata_20Q2,Metadata for cell lines in the 20Q2 DepMap release,EH3458,1804 cell lines,35 primary diseases and 38 lineages,3.12,May 20 2020,https://ndownloader.figshare.com/files/22629137
-proteomic_20Q2,Normalized quantitative profiling of proteins by mass spectrometry,EH3459,"12399 proteins, 375 cancer cell lines",24 primary diseases and 27 lineages,3.12,May 20 2020,https://gygi.med.harvard.edu/sites/gygi.med.harvard.edu/files/documents/protein_quant_current_normalized.csv.gz
-crispr_20Q3,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockdout dependency data,EH3797,"18119 genes, 769 cell lines",29 primary diseases and 26 lineages,3.12,Sep 15 2020,https://ndownloader.figshare.com/files/24613292
-copyNumber_20Q3,WES log copy number data,EH3798,"27639 genes, 1745 cell lines",35 primary diseases and 37 lineages,3.12,Sep 15 2020,https://ndownloader.figshare.com/files/24613352
-TPM_20Q3,CCLE TPM RNAseq gene expression data for protein coding genes,EH3799,"19144 genes, 1304 cancer cell lines",32 primary diseases and 34 lineages,3.12,Sep 15 2020,https://ndownloader.figshare.com/files/24613325
-mutationCalls_20Q3,"Merged mutation calls (for coding region, germline filtered) ",EH3800,"18802 genes, 1741 cell lines",35 primary diseases and 37 lineages,3.12,Sep 15 2020,https://ndownloader.figshare.com/files/24613355
-metadata_20Q3,Metadata for cell lines in the 20Q3 DepMap release,EH3801,1804 cell lines,35 primary diseases and 38 lineages,3.12,Sep 15 2020,https://ndownloader.figshare.com/files/24613394
-crispr_20Q4,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockdout dependency data,EH3960,"18119 genes, 808 cell lines",31 primary diseases and 29 lineages,3.12,Nov 20 2020,https://ndownloader.figshare.com/files/25494359
-copyNumber_20Q4,WES log copy number data,EH3961,"27562 genes, 1753 cell lines",35 primary diseases and 38 lineages,3.12,Nov 20 2020,https://ndownloader.figshare.com/files/25494416
-TPM_20Q4,CCLE TPM RNAseq gene expression data for protein coding genes,EH3962,"19182 genes, 1376 cancer cell lines",33 primary diseases and 37 lineages,3.12,Nov 20 2020,https://ndownloader.figshare.com/files/25494389
-mutationCalls_20Q4,"Merged mutation calls (for coding region, germline filtered) ",EH3963,"18789 genes, 1749 cell lines",35 primary diseases and 38 lineages,3.12,Nov 20 2020,https://ndownloader.figshare.com/files/25494419
-metadata_20Q4,Metadata for cell lines in the 20Q4 DepMap release,EH3964,1812 cell lines,35 primary diseases and 39 lineages,3.12,Nov 20 2020,https://ndownloader.figshare.com/files/25494443
+Dataset,Description,EH_Number,Genes,Cell_Lines,Primary_Diseases,Lineages,Regularly_Updated,BiocVersion,SourceVersion,SourceUrl
+rnai_19Q1,(DEMETER2) Batch and off-target corrected RNAi gene knockdown dependency data,EH2260,17309,711,30,31,N,3.1,Feb 19 2019,https://ndownloader.figshare.com/files/13515395
+crispr_19Q1,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockout dependency data,EH2261,17634,558,26,28,Y,3.1,Feb 19 2019,https://ndownloader.figshare.com/files/14221385
+copyNumber_19Q1,WES log copy number data,EH2262,23299,1604,38,33,Y,3.1,Feb 19 2019,https://depmap.org/portal/download/api/download/external?file_name=ccle%2Fdepmap-wes-cn-data-97cc.14%2Fpublic_19Q1_gene_cn.csv
+RPPA_19Q1,Reverse Phase Protein Array (RPPA) Western Blot expression data,EH2263,214,899,28,28,N,3.1,Feb 19 2019,https://depmap.org/portal/download/api/download/external?file_name=ccle%2Fdepmap-rnaseq-expression-data-ccd0.12%2FCCLE_depMap_19Q1_TPM.csv
+TPM_19Q1,CCLE TPM RNAseq gene expression data for protein coding genes,EH2264,57820,1165,33,32,Y,3.1,Feb 19 2019,https://depmap.org/portal/download/api/download/external?file_name=ccle%2FCCLE_RPPA_20180123.csv
+mutationCalls_19Q1,"Merged mutation calls (for coding region, germline filtered)",EH2265,18755,1601,37,37,Y,3.1,Feb 19 2019,https://depmap.org/portal/download/api/download/external?file_name=ccle%2Fdepmap-mutation-calls-9a1a.7%2Fdepmap_19Q1_mutation_calls.csv
+metadata_19Q1,Metadata for cell lines in the 19Q1 DepMap release,EH2266,NA,1677,38,33,Y,3.1,Feb 19 2019,https://depmap.org/portal/download/api/download/external?file_name=processed_portal_downloads%2Fdepmap-public-cell-line-metadata-183e.4%2FDepMap-2019q1-celllines_v2.csv
+rnai_19Q2,(DEMETER2) Batch and off-target corrected RNAi gene knockdown dependency data,EH2550,17309,712,30,31,N,3.1,May 7 2019,https://ndownloader.figshare.com/files/13515395
+crispr_19Q2,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockout dependency data,EH2551,17634,563,27,29,Y,3.1,May 7 2019,https://ndownloader.figshare.com/files/15023465
+copyNumber_19Q2,WES log copy number data,EH2552,23299,1627,38,34,Y,3.1,May 7 2019,https://ndownloader.figshare.com/files/15023495
+RPPA_19Q2,Reverse Phase Protein Array (RPPA) Western Blot expression data,EH2553,214,899,28,28,N,3.1,May 7 2019,https://depmap.org/portal/download/api/download/external?file_name=ccle%2FCCLE_RPPA_20180123.csv
+TPM_19Q2,CCLE TPM RNAseq gene expression data for protein coding genes,EH2554,19144,1165,34,33,Y,3.1,May 7 2019,https://ndownloader.figshare.com/files/15023483
+mutationCalls_19Q2,"Merged mutation calls (for coding region, germline filtered) data ",EH2555,18796,1631,37,34,Y,3.1,May 7 2019,https://ndownloader.figshare.com/files/15023498
+metadata_19Q2,Metadata for cell lines in the 19Q2 DepMap release,EH2556,NA,1714,39,34,Y,3.1,May 7 2019,https://ndownloader.figshare.com/files/15023525
+rnai_19Q3,(DEMETER2) Batch and off-target corrected RNAi gene knockdown dependency data,EH3080,17309,712,31,31,N,3.1,Aug 7 2019,https://ndownloader.figshare.com/files/13515395
+crispr_19Q3,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockout dependency data,EH3081,18333,625,28,29,Y,3.1,Aug 7 2019,https://ndownloader.figshare.com/files/16757666
+copyNumber_19Q3,WES log copy number data,EH3082,27562,1657,36,34,Y,3.1,Aug 7 2019,https://ndownloader.figshare.com/files/16757699
+RPPA_19Q3,Reverse Phase Protein Array (RPPA) Western Blot expression data,EH3083,214,899,28,28,N,3.1,Aug 7 2019,https://depmap.org/portal/download/api/download/external?file_name=ccle%2Fccle_2019%2FCCLE_RPPA_20181003.csv
+TPM_19Q3,CCLE TPM RNAseq gene expression data for protein coding genes,EH3084,19144,1210,32,33,Y,3.1,Aug 7 2019,https://ndownloader.figshare.com/files/16757690
+mutationCalls_19Q3,"Merged mutation calls (for coding region, germline filtered)",EH3085,18798,1656,36,34,Y,3.1,Aug 7 2019,https://ndownloader.figshare.com/files/16757702
+metadata_19Q3,Metadata for cell lines in the 19Q3 DepMap release,EH3086,NA,1736,37,34,Y,3.1,Aug 7 2019,https://ndownloader.figshare.com/files/16757723
+drug_sensitivity_19Q3,Drug sensitivity data for cancer cell lines derived from logfold change values relative to DMSO,EH3087,NA,578,23,25,N,3.1,Aug 7 2019,https://ndownloader.figshare.com/files/17008628
+crispr_19Q4,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockout dependency data,EH3240,18333,689,29,26,Y,3.11,Dec 20 2019,https://ndownloader.figshare.com/files/20234073
+copyNumber_19Q4,WES log copy number data,EH3241,27639,1682,35,36,Y,3.11,Dec 20 2019,https://ndownloader.figshare.com/files/20234367
+TPM_19Q4,CCLE TPM RNAseq gene expression data for protein coding genes,EH3242,19144,1249,32,34,Y,3.11,Dec 20 2019,https://ndownloader.figshare.com/files/20234346
+mutationCalls_19Q4,"Merged mutation calls (for coding region, germline filtered)",EH3243,18798,1666,35,36,Y,3.11,Dec 20 2019,https://ndownloader.figshare.com/files/20274747
+metadata_19Q4,Metadata for cell lines in the 19Q4 DepMap release,EH3244,NA,1756,35,37,Y,3.11,Dec 20 2019,https://ndownloader.figshare.com/files/20274744
+crispr_20Q1,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockout dependency data,EH3290,18333,739,29,26,Y,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21521910
+copyNumber_20Q1,WES log copy number data,EH3291,27639,1713,35,36,Y,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21521964
+TPM_20Q1,CCLE TPM RNAseq gene expression data for protein coding genes,EH3292,19144,1270,32,34,Y,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21521940
+mutationCalls_20Q1,"Merged mutation calls (for coding region, germline filtered)",EH3293,18802,1697,35,36,Y,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21521967
+metadata_20Q1,Metadata for cell lines in the 20Q1 DepMap release,EH3294,NA,1775,35,37,Y,3.12,Feb 20 2020,https://ndownloader.figshare.com/files/21522000
+crispr_20Q2,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockout dependency data,EH3454,18119,769,29,26,Y,3.12,May 20 2020,https://ndownloader.figshare.com/files/22629068
+copyNumber_20Q2,WES log copy number data,EH3455,27639,1745,35,37,Y,3.12,May 20 2020,https://ndownloader.figshare.com/files/22629107
+TPM_20Q2,CCLE TPM RNAseq gene expression data for protein coding genes,EH3456,19144,1304,35,37,Y,3.12,May 20 2020,https://ndownloader.figshare.com/files/22629092
+mutationCalls_20Q2,"Merged mutation calls (for coding region, germline filtered) ",EH3457,18802,1741,32,34,Y,3.12,May 20 2020,https://ndownloader.figshare.com/files/22629110
+metadata_20Q2,Metadata for cell lines in the 20Q2 DepMap release,EH3458,NA,1804,35,38,Y,3.12,May 20 2020,https://ndownloader.figshare.com/files/22629137
+proteomic_20Q2,Normalized quantitative profiling of proteins by mass spectrometry,EH3459,12399,375,24,27,N,3.12,May 20 2020,https://gygi.med.harvard.edu/sites/gygi.med.harvard.edu/files/documents/protein_quant_current_normalized.csv.gz
+crispr_20Q3,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockout dependency data,EH3797,18119,769,29,26,Y,3.12,Sep 15 2020,https://ndownloader.figshare.com/files/24613292
+copyNumber_20Q3,WES log copy number data,EH3798,27639,1745,35,37,Y,3.12,Sep 15 2020,https://ndownloader.figshare.com/files/24613352
+TPM_20Q3,CCLE TPM RNAseq gene expression data for protein coding genes,EH3799,19144,1304,32,34,Y,3.12,Sep 15 2020,https://ndownloader.figshare.com/files/24613325
+mutationCalls_20Q3,"Merged mutation calls (for coding region, germline filtered) ",EH3800,18802,1741,35,37,Y,3.12,Sep 15 2020,https://ndownloader.figshare.com/files/24613355
+metadata_20Q3,Metadata for cell lines in the 20Q3 DepMap release,EH3801,NA,1804,35,38,Y,3.12,Sep 15 2020,https://ndownloader.figshare.com/files/24613394
+crispr_20Q4,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockout dependency data,EH3960,18119,808,31,29,Y,3.12,Nov 20 2020,https://ndownloader.figshare.com/files/25494359
+copyNumber_20Q4,WES log copy number data,EH3961,27562,1753,35,38,Y,3.12,Nov 20 2020,https://ndownloader.figshare.com/files/25494416
+TPM_20Q4,CCLE TPM RNAseq gene expression data for protein coding genes,EH3962,19182,1376,33,37,Y,3.12,Nov 20 2020,https://ndownloader.figshare.com/files/25494389
+mutationCalls_20Q4,"Merged mutation calls (for coding region, germline filtered) ",EH3963,18789,1749,35,38,Y,3.12,Nov 20 2020,https://ndownloader.figshare.com/files/25494419
+metadata_20Q4,Metadata for cell lines in the 20Q4 DepMap release,EH3964,NA,1812,35,39,Y,3.12,Nov 20 2020,https://ndownloader.figshare.com/files/25494443
+crispr_21Q1,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockout dependency data,EH5358,18119,808,31,29,Y,3.12,Feb 07 2021,https://ndownloader.figshare.com/files/26261293
+copyNumber_21Q1,WES log copy number data,EH5359,27562,1740,35,38,Y,3.12,Feb 07 2021,https://ndownloader.figshare.com/files/26261524
+TPM_21Q1,CCLE TPM RNAseq gene expression data for protein coding genes,EH5360,19177,1376,33,37,Y,3.12,Feb 07 2021,https://ndownloader.figshare.com/files/26261476
+mutationCalls_21Q1,"Merged mutation calls (for coding region, germline filtered)",EH5361,18788,1747,35,38,Y,3.12,Feb 07 2021,https://ndownloader.figshare.com/files/26261527
+metadata_21Q1,Metadata for cell lines in the 21Q1 DepMap release,EH5362,NA,1811,35,39,Y,3.12,Feb 07 2021,https://ndownloader.figshare.com/files/26261569
+crispr_21Q2,(CERES) Batch and off-target corrected CRISPR-Cas9 gene knockout dependency data,EH6118,17645,990,32,30,Y,3.13,May 07 2021,https://ndownloader.figshare.com/files/27902226
+copyNumber_21Q2,WES log copy number data,EH6119,27562,1742,35,38,Y,3.13,May 07 2021,https://ndownloader.figshare.com/files/27902124
+TPM_21Q2,CCLE TPM RNAseq gene expression data for protein coding genes,EH6120,19177,1379,33,37,Y,3.13,May 07 2021,https://ndownloader.figshare.com/files/27902091
+mutationCalls_21Q2,"Merged mutation calls (for coding region, germline filtered) ",EH6121,18787,1750,35,38,Y,3.13,May 07 2021,https://ndownloader.figshare.com/files/27902118
+metadata_21Q2,Metadata for cell lines in the 21Q2 DepMap release,EH6122,NA,1814,35,39,Y,3.13,May 07 2021,https://ndownloader.figshare.com/files/27902376
+crispr_21Q3,(Chronos) Batch and off-target corrected CRISPR-Cas9 gene knockout dependency data,EH6753,17393,1032,32,30,Y,3.14,Aug 20 2021,https://ndownloader.figshare.com/files/29125323
+copyNumber_21Q3,WES log copy number data,EH6754,27562,1741,35,37,Y,3.14,Aug 20 2021,https://ndownloader.figshare.com/files/29125230
+TPM_21Q3,CCLE TPM RNAseq gene expression data for protein coding genes,EH6755,19177,1377,33,37,Y,3.14,Aug 20 2021,https://ndownloader.figshare.com/files/29124747
+mutationCalls_21Q3,"Merged mutation calls (for coding region, germline filtered) ",EH6756,18784,1746,35,37,Y,3.14,Aug 20 2021,https://ndownloader.figshare.com/files/29125233
+metadata_21Q3,Metadata for cell lines in the 21Q3 DepMap release,EH6757,NA,2944,43,47,Y,3.14,Aug 20 2021,https://ndownloader.figshare.com/files/29162481
+crispr_21Q4,(Chronos) Batch and off-target corrected CRISPR-Cas9 gene knockout dependency data,EH7290,17386,1032,32,30,Y,3.14,Nov 21 2021,https://ndownloader.figshare.com/files/31315996
+copyNumber_21Q4,WES log copy number data,EH7291,25368,1750,35,37,Y,3.14,Nov 21 2021,https://ndownloader.figshare.com/files/31315924
+TPM_21Q4,CCLE TPM RNAseq gene expression data for protein coding genes,EH7292,19177,1389,33,37,Y,3.14,Nov 21 2021,https://ndownloader.figshare.com/files/31315882
+mutationCalls_21Q4,"Merged mutation calls (for coding region, germline filtered) ",EH7293,18784,1755,35,37,Y,3.14,Nov 21 2021,https://ndownloader.figshare.com/files/31315930
+metadata_21Q4,Metadata for cell lines in the 21Q4 DepMap release,EH7294,NA,1825,35,39,Y,3.14,Nov 21 2021,https://ndownloader.figshare.com/files/31316011
+crispr_22Q1,(Chronos) Batch and off-target corrected CRISPR-Cas9 gene knockout dependency data,EH7523,17386,1070,32,31,Y,3.15,Feb 8 2022,https://ndownloader.figshare.com/files/34008491
+copyNumber_22Q1,WES log copy number data,EH7524,25368,1754,35,38,Y,3.15,Feb 8 2022,https://ndownloader.figshare.com/files/34008428
+TPM_22Q1,CCLE TPM RNAseq gene expression data for protein coding genes,EH7525,19177,1393,33,38,Y,3.15,Feb 8 2022,https://ndownloader.figshare.com/files/34008404
+mutationCalls_22Q1,"Merged mutation calls (for coding region, germline filtered) ",EH7526,18784,1759,35,38,Y,3.15,Feb 8 2022,https://ndownloader.figshare.com/files/34008434
+metadata_22Q1,Metadata for cell lines in the 22Q1 DepMap release,EH7527,NA,1829,35,40,Y,3.15,Feb 8 2022,https://ndownloader.figshare.com/files/34008503
+achilles_22Q1,Project Achilles CRISPR screen metadata,EH7528,NA,NA,NA,NA,Y,3.15,Feb 8 2022,https://ndownloader.figshare.com/files/34008386
+gene_summary_22Q1,Gene summaries displaying probability of dependency ,EH7529,NA,NA,NA,NA,N,3.15,Feb 8 2022,https://depmap.org/portal/api/download/gene_dep_summary
+drug_sensitivity_21Q2,Drug sensitivity data for cancer cell lines derived from logfold change values relative to DMSO,EH7530,NA,578,23,25,N,3.15,Feb 8 2022,https://ndownloader.figshare.com/files/17008628
+crispr_22Q2,(Chronos) Batch and off-target corrected CRISPR-Cas9 gene knockout dependency data,EH7554,17386,1086,31,28,Y,3.16,May 9 2022,https://ndownloader.figshare.com/files/34990036
+copyNumber_22Q2,Inferred log copy number data,EH7555,25368,1766,33,30,Y,3.16,May 9 2022,https://ndownloader.figshare.com/files/34989937
+TPM_22Q2,CCLE TPM RNAseq gene expression data for protein coding genes,EH7556,19221,1406,33,30,Y,3.16,May 9 2022,https://ndownloader.figshare.com/files/34989919
+mutationCalls_22Q2,"Merged mutation calls (for coding region, germline filtered) ",EH7557,18784,1771,33,30,Y,3.16,May 9 2022,https://ndownloader.figshare.com/files/34989940
+metadata_22Q2,Metadata for cell lines in the 22Q1 DepMap release,EH7558,NA,1840,33,30,Y,3.16,May 9 2022,https://ndownloader.figshare.com/files/35020903
+achilles_22Q2,Project Achilles CRISPR screen metadata,EH7559,NA,NA,NA,NA,Y,3.16,May 9 2022,https://ndownloader.figshare.com/files/34989901
